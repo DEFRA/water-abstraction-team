@@ -1,10 +1,12 @@
 # Ways of working
 
-All new team members are encouraged to read [Software development standards](https://github.com/DEFRA/software-development-standards) and [DST-Guides](https://github.com/DEFRA/dst-guides) first. Essentially any processes or ways of working outlined in these we follow. What we have here is addendum to that.
+All new team members are encouraged to read [Software development standards](https://github.com/DEFRA/software-development-standards). Essentially any processes or ways of working outlined in these we follow (or try to!) What we have here is addendum to that.
+
+We also encourage new members to read [Node Best Practices](https://github.com/goldbergyoni/nodebestpractices).
 
 ## Pull requests
 
-Our pull requests follow the standard set out in [DST Guides](https://github.com/DEFRA/dst-guides/blob/master/process/pull_request.md). The TL;DR is
+Our pull requests follow the standard set out in [Software development standards](https://github.com/DEFRA/software-development-standards/blob/master/processes/pull_requests.md). The TL;DR is
 
 - all changes are made on a branch
 - all changes are peer reviewed
