@@ -9,6 +9,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 ## Contents
 
 - [API examples](/api/README.md)
+- [Contributing to this project](/contributing.md)
 - [Principles](principles.md)
 - [Ways of working](ways_of_working.md)
 
