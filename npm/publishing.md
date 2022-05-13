@@ -5,6 +5,7 @@ The [Water Abstraction Helpers](https://github.com/DEFRA/water-abstraction-helpe
 
 To publish a package to npm:
 - Create a branch to make changes
+- Manually Update the package.json version number (This will be the tag version aswell)
 - Ensure the pipeline passes
 - Merge into master
 - Create a Release / Tag (This will trigger the release pipeline)
