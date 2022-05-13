@@ -3,7 +3,7 @@
 The [Water Abstraction Helpers](https://github.com/DEFRA/water-abstraction-helpers) repo is publsihed to npm: https://www.npmjs.com/package/@envage/water-abstraction-helpers.
 
 
-To publsih a pakcgae to npm:
+To publish a package to npm:
 - Create a branch to make changes
 - Ensure the pipeline passes
 - Merge into master
