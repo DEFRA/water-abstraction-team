@@ -11,6 +11,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 - [API examples](/api/README.md)
 - [Principles](principles.md)
 - [Ways of working](ways_of_working.md)
+- [Publishing NPM packages](/npm/publishing.md)
 
 ## Otherwise known as
 
