@@ -38,7 +38,7 @@ Other than that you are good to go. Don't restrict yourself to just problems tha
 
 ### Progressing the issue
 
-Unlike changes via PR there is no formal approval process. But before you immediately dive into, for example, implementing TypeScrip, do double-check with your team mates this is something they agree with.
+Unlike changes via PR there is no formal approval process. But before you immediately dive into, for example, implementing TypeScript, do double-check with your team mates this is something they agree with.
 
 If all good anyone on the tech team is free to get on with an issue. Assign yourself so we know you are dealing with it. If the issue results in changes in other repos link to the issue in your commits. GitHub is clever enough to show them in the issue.
 
