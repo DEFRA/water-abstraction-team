@@ -34,7 +34,7 @@ Anyone can add an issue! There are only 3 rules to follow
 
 Seriously, issue lists have a habit of getting out of hand especially on a project with as much to fix as **Water Abstractions**. So the list doesn't become unmanageble do please check your not duplicating something, or whether you could instead be adding to an existing one.
 
-Other than that you are good to go. Don't restrict yourself to just problems that need fixing. If there is something new we could be doing, either in code or our processes then feel free to use issues as a why of collecting initial feedback.
+Other than that you are good to go. Don't restrict yourself to just problems that need fixing. If there is something new we could be doing, either in code or our processes then feel free to use issues as a way of collecting initial feedback.
 
 ### Progressing the issue
 
