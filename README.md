@@ -12,6 +12,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 - [Contributing to this project](/contributing.md)
 - [Principles](principles.md)
 - [Publishing NPM packages](/npm/publishing.md)
+- [Redis notes](/redis_notes.md)
 - [Releasing](/releasing/README.md)
 - [Ways of working](ways_of_working.md)
 
