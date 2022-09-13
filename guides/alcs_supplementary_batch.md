@@ -179,3 +179,28 @@ const financialYears = range(batch.startYear.endYear, batch.endYear.endYear + 1)
 Then for each financial year it calls `processFinancialYear()` and returns the combined results as a flattened array.
 
 #### Process Financial Year
+
+First grabs a copy of
+
+- grab all 2PT sent batches for the region and financial year
+- grab all supplementary sent batches for the region and financial year
+
+Then runs the query `findValidInRegionAndFinancialYearSupplementary` query in `src/lib/connectors/repos/queries/charge-versions.js` to return current charge versions for the matching region, whose licence is not currently in the charging workflow, for example, because they are being reviewed.
+
+We then call `processChargeVersionFinancialYear()` for each charge version returned.
+
+If the charge version is not chargeable and is supplementary we return the result of `createBatchChargeVersionYear()` in `src/modules/billing/services/charge-version-year.js`. This is an instance of a `BillingBatchChargeVersionYear` model based on a record in `water.billing_batch_charge_versions_years` it also creates.
+
+Else, we use `getRequiredTransactionTypes()` to return an array of transaction types.
+
+```javascript
+{
+  types: [
+    {
+      type : 'two_part_tariff',
+      isSummer: false
+    }
+  ],
+  chargeVersionHasAgreement: false
+}
+```
