@@ -24,7 +24,7 @@ Don't worry about any draft feature or fix PRs. But any automated dependency PRs
 
 ## Check for missing labels
 
-Review the merged PRs for missing labels eg. `enhancement`, `bug` etc. You can quickly see any PRs merged since the last release by navigating to the repo in your browser, clicking the latest release on the right of the page, then clicking the link near the top that shows the number of commits to main since the release.
+Review the merged PRs for missing labels, for example, **enhancement**, **bug** etc. You can quickly see any PRs merged since the last release by navigating to the repo in your browser, clicking the latest release on the right of the page, then clicking the link near the top that shows the number of commits to `main` since the release.
 
 ## Agree version
 
@@ -55,7 +55,7 @@ npm version patch # Bumps the patch version ie. 2.25.1 -> 2.25.2
 This performs the following steps:
 
 - **Updates the version**: The version number in `package.json` and `package-lock.json` is updated.
-- **Updates the CHANGELOG**: We use [auto-changelog](https://github.com/cookpete/auto-changelog) to generate our CHANGELOGs. Our `version` script in `package.json` runs this to update `CHANGELOG.md` and adds it to a commit.
+- **Updates the CHANGELOG**: We use [auto-changelog](https://github.com/cookpete/auto-changelog) to generate our CHANGELOGs. Our `version` script in `package.json` runs this to update `CHANGELOG.md`.
 - **Creates a commit**: The changes to `package.json`, `package-lock.json` and `CHANGELOG.md` are added to a commit where the commit message is the new version number, eg. `2.25.2`.
 - **Creates a tag**: We use [git annotated tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging) to track our releases and control what Jenkins actually deploys. `npm version` creates this tag for us, where the tag name is the new version number preceded by `v`, eg. `v2.25.2` and the tag message is just the version number, eg. `2.25.2`.
 
@@ -82,10 +82,9 @@ DEPLOY_BRANCH=v2.25.2
 
 Now click the _Build Now_ button and wait for it to succeed.
 
-
 ## Test sign-off
 
-This stage is managed by QA & Test with support from development if needed. With the release candidate deployed to the pre-production environment it is the responsibility of the test analyst to 'sign it off'.
+This stage is managed by QA & Test with support from development if needed. With the release candidate deployed to the pre-production environment it is the responsibility of a test analyst to 'sign it off'.
 
 It involves running the full suite of regression tests plus any additional manual testing felt necessary to confirm the expected functionality is included and still working. The release can then be given its 'test signoff'.
 
