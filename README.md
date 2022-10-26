@@ -11,8 +11,9 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 - [API examples](/api/README.md)
 - [Contributing to this project](/contributing.md)
 - [Principles](principles.md)
-- [Ways of working](ways_of_working.md)
 - [Publishing NPM packages](/npm/publishing.md)
+- [Releasing](/releasing/README.md)
+- [Ways of working](ways_of_working.md)
 
 ## Otherwise known as
 
@@ -20,7 +21,7 @@ Those new to the EA or Defra may well be surprised by the explosion 💥 of acro
 
 - **WABS** Water Abstraction Service
 - **WAL** Water Abstraction Licence (commonly used by our web-ops team)
-- **WRLS** Water ??? Licence Service
+- **WRLS** Water Resource Licence Service
 
 ## Contributing to this project
 
