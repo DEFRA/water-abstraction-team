@@ -7,4 +7,4 @@ The release processes is based on packaging up a 'release' ready to be submitted
 The team splits the process into 2
 
 - **[Sign off](/releasing/sign_off.md)** - having identified which repos will be included in the 'release', we version ([tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging)) them, deploy those versions to the `pre-prod` environment and then run our regression tests. Meantime, we are generating a [CHANGELOG](https://keepachangelog.com/en/1.0.0/) and updating any relevant documentation for each one.
-- **Schedule** - submit the RfC and arrange for the signed off version to be deployed to `production`.
+- **[Schedule](/releasing/schedule.md)** - submit the RfC and arrange for the signed off 'release' to be deployed to `production`.
