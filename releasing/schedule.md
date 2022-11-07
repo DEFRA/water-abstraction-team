@@ -97,7 +97,7 @@ This covers the steps involved for this release.
 
 ## Create calendar appointment
 
-Once a date and time has been confirmed create a calendar appointment and add the shared web-ops account **SM-Defra-ddts-aws-webops** and the team's QA as `required`. Add the rest of the tech team as `optional`. Use the following template for the title and content
+Once a date and time has been confirmed create a calendar appointment and add the shared web-ops account **SM-Defra-ddts-aws-webops** and the team's QA as `required`. Add the rest of the dev team as `optional`. Use the following template for the title and content
 
 ```text
 title: WRLS RFC CHG0059773
