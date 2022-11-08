@@ -23,7 +23,7 @@ Once web-ops confirm the changes have been applied, the test analyst will perfor
 
 ## Confirm release successful
 
-We need send 1 email to change management and web-ops to confirm the RfC was successful. We let the rest of the delivery team know by putting a post in the team's [Teams channel (MSFT-Defra )](https://teams.microsoft.com/l/team/19%3acSnPCAkeDlujg1vdWAzicBz8xLDXSZgD3hhTSK7QFr81%40thread.tacv2/conversations?groupId=051160dd-3d14-4f28-8354-725992c0cf4c&tenantId=770a2450-0227-4c62-90c7-4e38537f1102)
+We need send an email to change management and web-ops to confirm the RfC was successful. We let the rest of the delivery team know by putting a post in the team's [Teams channel (MSFT-Defra )](https://teams.microsoft.com/l/team/19%3acSnPCAkeDlujg1vdWAzicBz8xLDXSZgD3hhTSK7QFr81%40thread.tacv2/conversations?groupId=051160dd-3d14-4f28-8354-725992c0cf4c&tenantId=770a2450-0227-4c62-90c7-4e38537f1102)
 
 ### Email
 
@@ -51,7 +51,7 @@ Create a post with approximately the following format and send to the team's [Te
 
 We use [GitHub's release](https://docs.github.com/en/github/administering-a-repository/about-releases) functionality to track our releases to production. They form a quick and handy reference as to what versions of the code got released to production and when.
 
-Go to the relevant GitHib project and select the 'Releases' tab then click the _Draft a new release_ button. Select the tag for that repo's version in the 'release'. For the title just use the version, for example, `Version 1.44.0`. In the description add the following
+Go to the relevant GitHib project and select the 'Releases' tab then click the _Draft a new release_ button. Select the tag for that repo's version in the 'release'. For the title just use the version, for example, `Version 1.44.0`. In the description add the following.
 
 ```text
 Released under RFC [reference] on [Date - DD MMMM YYYY]. See [Link to CHANGELOG.MD] for details
