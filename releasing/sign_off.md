@@ -6,7 +6,7 @@ This kicks in when the team feels thay have a 'release candidate'. Essentially a
 
 > A release candidate can be one or more repos being shipped to production.
 
-The following process will need to be done individually for each repo in a release candidate.
+The following steps need to be done for each repo in a release candidate.
 
 - [Check for outstanding dependency PRs](#check-for-outstanding-dependency-prs)
 - [Check for missing labels](#check-for-missing-labels)
@@ -14,6 +14,9 @@ The following process will need to be done individually for each repo in a relea
 - [Bump version](#bump-version)
 - [Push up the commit and tag](#push-up-the-commit-and-tag)
 - [Update pre-production Jenkins job](#update-pre-production-jenkins-job)
+
+We then confirm whether the 'release candidate' is signed off with these steps.
+
 - [Test sign-off](#test-sign-off)
   - [Approval to release](#approval-to-release)
   - [If issues are found](#if-issues-are-found)
@@ -24,7 +27,7 @@ Don't worry about any draft feature or fix PRs. But any automated dependency PRs
 
 ## Check for missing labels
 
-Review the merged PRs for missing labels, for example, **enhancement**, **bug** etc. You can quickly see any PRs merged since the last release by navigating to the repo in your browser, clicking the latest release on the right of the page, then clicking the link near the top that shows the number of commits to `main` since the release.
+Review the merged PRs for missing labels, for example, **enhancement**, **bug** etc. You can quickly see any PRs merged since the last release by navigating to the repo in your browser, clicking the latest release on the right of the page, then clicking the link near the top that shows the number of commits to `main` since the last release.
 
 ## Agree version
 
@@ -34,7 +37,7 @@ We use [semantic versioning](https://semver.org/) to differentiate between patch
 
 The development team will then review the changes made to decide whether a major, minor, or patch version bump is needed.
 
-> The individual repos making up a release candidate can potentially be updated in different ways -- the UI may only receive a patch version but another part could be a minor update, for example.
+> The individual repos making up a release candidate can potentially be versioned in different ways; the UI repo only needs a patch but the Import repo is deemed to be a minor update, for example.
 
 ## Bump version
 
@@ -42,7 +45,7 @@ The development team will then review the changes made to decide whether a major
 
 We use `npm version` to bump the version as this performs several tasks for us with just one command.
 
-> You'll notice we don't create a PR for any of this. Bumping the version is the only time we make an exception to the rule 'all changes on a branch'. We do this to avoid polluting our CHANGELOG with lots of entries.
+> You'll notice we don't create a PR for any of this. Bumping the version is the only time we make an exception to the rule [all changes on a branch](/ways_of_working.md#pull-requests). We do this to avoid polluting our CHANGELOG with lots of entries.
 
 To update the version, run it with one of the following commands:
 
@@ -72,7 +75,7 @@ git push --tags
 
 ## Update pre-production Jenkins job
 
-> If multiple repos are part of the release candidate, wait until all repos have been through the version bump process before updating the Jenkins jobs.
+> If multiple repos are part of the release candidate, wait until all repos have been through the [bump version process](#bump-version) before updating the Jenkins jobs.
 
 In [Jenkins](https://wal-jenkins.aws-int.defra.cloud/) head to the [Preproduction](https://wal-jenkins.aws-int.defra.cloud/view/Preproduction/) tab and find the appropriate deployment job for the repo we're updating. Click _Configure_ and then update the `DEPLOY_BRANCH` param in the _General->Properties Content_ field with the name of the version tag then save it. For example:
 
@@ -92,9 +95,7 @@ For reference our automated acceptance tests for WRLS can be found in the [Water
 
 ### Approval to release
 
-Once all testing phases are complete we just need confirmation from the team's QA that we are ok to then schedule the release.
-
-> Docs on scheduling are forthcoming!
+Once all testing phases are complete we just need confirmation from the team's QA that we are ok to then [schedule the release](/releasing/schedule.md).
 
 ### If issues are found
 
