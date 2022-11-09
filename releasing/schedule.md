@@ -29,7 +29,7 @@ This should also take into account the type of change being requested.
 
 If you need to co-ordinate the date and time for the release you will need to collaborate with these stakeholders.
 
-- the delivery manager as they will liaise with the client service leads
+- the delivery manager as they will liaise with the business leads
 - the QA lead as they will need to be on hand to test the service after release
 - web-ops as they perform all releases and updates to production environments
 
@@ -53,7 +53,7 @@ Submit the RfC in [myIT](https://defra.service-now.com) (also known as **Service
 
 To ensure everyone involved in shipping the release is clear on what actions are needed, prepare a [release note](https://gitlab-dev.aws-int.defra.cloud/open/release-notes).
 
-There are plenty of existing ones to base it on covering a number of different types of 'release'. As an example, a simple would be
+There are plenty of existing ones to base it on covering a number of different types of 'release'. As an example, a simple one would be
 
 ```markdown
 # 20 October 2022
