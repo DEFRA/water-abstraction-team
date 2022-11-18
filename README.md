@@ -14,6 +14,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 - [Publishing NPM packages](/npm/publishing.md)
 - [Redis notes](/redis_notes.md)
 - [Releasing](/releasing/README.md)
+- [Request for Change (RfC)](/rfc/README.md)
 - [Ways of working](ways_of_working.md)
 
 ## Otherwise known as
