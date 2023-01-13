@@ -90,7 +90,7 @@ The `require()` statements should be grouped by
 - constants
 - module scoped variables
 
-Place a new line between each one and list entries alphabetically.
+Place a new line between each one and list entries alphabetically. Any destructured functions should also be listed alphabetically.
 
 ```javascript
 'use strict'
@@ -103,6 +103,7 @@ Place a new line between each one and list entries alphabetically.
 const NotifyClient = require('notifications-node-client').NotifyClient
 const Pino = require('pino')
 
+const { createBillRun, deleteBillRun, viewBillRun } = require ('../services/bill-run.service.js')
 const PersonService = require('../services/person.service.js')
 const RequestLib = require('../lib/request.lib.js')
 
@@ -118,7 +119,7 @@ let message
 
 ### Top of test.js files
 
-We have a different convention for the top of our `*.test.js` files. The groupings are different and we make use of comments to identify them. Excluding the external test framework dependencies, groups are still listed alphabetically and separated by a new line.
+We have a different convention for the top of our `*.test.js` files. The groupings are different and we make use of comments to identify them. Excluding the external test framework dependencies, groups are still listed alphabetically and separated by a new line. Destructured functions are also listed alphabetically with the exception of **Lab**. Those we extract in hierarchical order.
 
 - `use strict` as first statement
 - test frameworks
@@ -143,6 +144,7 @@ const { expect } = Code
 // Test helpers
 const ChargeVersionHelper = require('../support/helpers/charge-version.helper.js')
 const ChargeVersionModel = require('../../app/models/charge-version.model.js')
+const { formatChargeVersion, parseChargeVersion } = require('../../app/services/parse-charge-version.service.js')
 
 // Things we need to stub
 const RequestLib = require('../../app/lib/request.lib.js')
