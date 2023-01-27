@@ -55,7 +55,9 @@ const helloWorld = () => {
 }
 ```
 
-When we do need to use arrow functions, parameters are always wrapped in brackets even if there is only one. Also, use _block body_ over _concise body_.
+### Arrow functions
+
+When we do need to use [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), parameters are always wrapped in brackets even if there is only one. Also, use _block body_ over _concise body_ *️⃣.
 
 ```javascript
 const materials = [
@@ -72,6 +74,25 @@ materials.forEach((material) => {
 
 // Do not use Concise body version
 materials.forEach((material) => console.log(`${material} - ${material.length}`))
+```
+
+#### *️⃣ The exception
+
+The one exception to _block_ body over _concise_ is when you are just performing a [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) check.
+
+```javascript
+const transactions = [
+  { billableDays: 25, volume: 100 },
+  { billableDays: 15, volume: 75, charge: 754 }
+]
+
+// Concise - It's clearer we only care if it's 'truthy'
+transactions.some((transaction) => transaction.charge)
+
+// Body - It looks like we care more about the value of charge
+transactions.some((transaction) => {
+  return transaction.charge
+})
 ```
 
 ## Top of .js files
