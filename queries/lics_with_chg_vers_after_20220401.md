@@ -32,16 +32,13 @@ SELECT
     WHEN l.revoked_date IS NOT NULL THEN 'revoked'
     ELSE 'current'
   END) AS licence_status,
-  -- The request was for Licence Type (full or transfer). However, we can't find any data that
-  -- refers to a type of that has one of these values
-  ('UNKNOWN') AS licence_type,
   (CASE
     WHEN l.expired_date IS NOT NULL THEN l.expired_date
     WHEN l.lapsed_date IS NOT NULL THEN l.lapsed_date
     WHEN l.revoked_date IS NOT NULL THEN l.revoked_date
   END) AS effective_end_date,
   bill_runs.bill_run_number,
-  cp.is_section_127_agreement_enabled,
+  agreements.agreement_codes,
   cv.*
 FROM water.licences l
 -- They need to know if the charge version has been included in an annual bill run this financial year.
@@ -60,6 +57,24 @@ LEFT JOIN (
   WHERE bb.to_financial_year_ending = 2023 AND bb.status = 'sent' AND bb.batch_type = 'annual'
   GROUP BY bil.licence_id, bb.bill_run_number, bb.batch_type, bb.to_financial_year_ending, bb.status
 ) bill_runs ON bill_runs.licence_id = l.licence_id
+-- Some licences have special agreements linked to them. `financial_agreement_types` is the lookup table
+-- and `licence_agreements` is the join table. A licence can have multiple agreements but the request was
+-- to see them in listed as a single value. So, we use the PostgreSQL STRING_AGG() function to concatenate
+-- the codes from multiple licence_agreements rows into one result.
+-- Note: Some licences return what appears to be duplicates, for example AN/031/0014/056 will return 'S127|S127'.
+-- This is because there will be 2 `licence_agreements` rows for the same licence and agreement type. Neither
+-- will have an end date, but one will have superceded the other based on start_date. This is easy enough to
+-- handle with code in the UI. But resolving it would add unnecessary complexity in SQL to what is intended to
+--  be an ad-hoc query.
+LEFT JOIN (
+  SELECT
+    la.licence_ref,
+    STRING_AGG(fat.financial_agreement_code, '|') AS agreement_codes
+  FROM water.licence_agreements la
+  INNER JOIN water.financial_agreement_types fat ON fat.financial_agreement_type_id = la.financial_agreement_type_id
+  WHERE (la.end_date IS NULL) OR la.end_date >= NOW()
+  GROUP BY la.licence_ref
+) agreements ON agreements.licence_ref = l.licence_ref
 -- A licence will have multiple charge versions. As changes are made a new charge version is created. However
 -- experience has shown us that the `status` field in the table cannot be trusted so we cannot just grab
 -- the one with a status of 'current'. So, we are left with grabbing whichever has the latest version number
