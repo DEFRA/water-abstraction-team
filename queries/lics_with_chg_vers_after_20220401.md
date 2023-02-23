@@ -35,7 +35,11 @@ SELECT
   -- The request was for Licence Type (full or transfer). However, we can't find any data that
   -- refers to a type of that has one of these values
   ('UNKNOWN') AS licence_type,
-  l.start_date,
+  (CASE
+    WHEN l.expired_date IS NOT NULL THEN l.expired_date
+    WHEN l.lapsed_date IS NOT NULL THEN l.lapsed_date
+    WHEN l.revoked_date IS NOT NULL THEN l.revoked_date
+  END) AS effective_end_date,
   bill_runs.bill_run_number,
   cp.is_section_127_agreement_enabled,
   cv.*
