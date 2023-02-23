@@ -39,7 +39,8 @@ SELECT
   END) AS effective_end_date,
   bill_runs.bill_run_number,
   agreements.agreement_codes,
-  cv.*
+  bcc.reference,
+  ce.*
 FROM water.licences l
 -- They need to know if the charge version has been included in an annual bill run this financial year.
 -- We create a derived table based on the billing data filtered by bill run type, status and financial year.
@@ -84,6 +85,7 @@ INNER JOIN (
 ) latest_charge_version ON latest_charge_version.licence_ref = l.licence_ref
 INNER JOIN water.charge_versions cv ON (cv.licence_ref = latest_charge_version.licence_ref AND cv.version_number = latest_charge_version.latest_version)
 INNER JOIN water.charge_elements ce ON ce.charge_version_id = cv.charge_version_id
+INNER JOIN water.billing_charge_categories bcc ON bcc.billing_charge_category_id = ce.billing_charge_category_id
 INNER JOIN water.charge_purposes cp ON cp.charge_element_id = ce.charge_element_id
 WHERE cv.date_created >= '2022-04-01'
 ```
