@@ -28,18 +28,17 @@
 SELECT
   l.licence_ref,
   (CASE
-    WHEN l.expired_date IS NOT NULL THEN 'expired'
-    WHEN l.lapsed_date IS NOT NULL THEN 'lapsed'
     WHEN l.revoked_date IS NOT NULL THEN 'revoked'
+    WHEN l.lapsed_date IS NOT NULL THEN 'lapsed'
+    WHEN l.expired_date IS NOT NULL AND l.expired_date < NOW() THEN 'expired'
     ELSE 'current'
   END) AS licence_status,
-  (l.start_date) AS effective_start_date,
   (CASE
-    WHEN l.expired_date IS NOT NULL THEN l.expired_date
-    WHEN l.lapsed_date IS NOT NULL THEN l.lapsed_date
     WHEN l.revoked_date IS NOT NULL THEN l.revoked_date
+    WHEN l.lapsed_date IS NOT NULL THEN l.lapsed_date
+    WHEN l.expired_date IS NOT NULL THEN l.expired_date
   END) AS effective_end_date,
-  agreements.agreement_codes,
+  (agreements.agreement_codes) AS licence_agreements,
   (cvw.status) AS workflow_status
 FROM water.licences l
 -- Some licences have special agreements linked to them. `financial_agreement_types` is the lookup table
@@ -62,6 +61,6 @@ LEFT JOIN (
 ) agreements ON agreements.licence_ref = l.licence_ref
 LEFT JOIN water.charge_version_workflows cvw ON cvw.licence_id = l.licence_id
 WHERE l.licence_id NOT IN (
-  SELECT cv.licence_id FROM water.charge_versions cv WHERE cv.date_created >= '2022-04-01'
+  SELECT cv.licence_id FROM water.charge_versions cv WHERE cv.start_date >= '2022-04-01'
 )
 ```
