@@ -58,17 +58,7 @@ SELECT
   (ce.adjustments->>'s130') AS adj_s130,
   (ce.adjustments->>'charge') AS adj_charge,
   (ce.adjustments->>'winter') AS adj_winter,
-  (ce.adjustments->>'aggregate') AS adj_aggregate,
-  cp.charge_purpose_id,
-  cp.description,
-  cp.abstraction_period_start_day,
-  cp.abstraction_period_start_month,
-  cp.abstraction_period_end_day,
-  cp.abstraction_period_end_month,
-  cp.authorised_annual_quantity,
-  cp.billable_annual_quantity,
-  cp.loss,
-  cp.is_section_127_agreement_enabled
+  (ce.adjustments->>'aggregate') AS adj_aggregate
 FROM water.licences l
 -- Some licences have special agreements linked to them. `financial_agreement_types` is the lookup table
 -- and `licence_agreements` is the join table. A licence can have multiple agreements but the request was
@@ -107,6 +97,6 @@ LEFT JOIN (
 INNER JOIN water.charge_versions cv ON cv.licence_id = l.licence_id
 INNER JOIN water.charge_elements ce ON ce.charge_version_id = cv.charge_version_id
 INNER JOIN water.billing_charge_categories bcc ON bcc.billing_charge_category_id = ce.billing_charge_category_id
-INNER JOIN water.charge_purposes cp ON cp.charge_element_id = ce.charge_element_id
 WHERE cv.start_date >= '2022-04-01'
+AND cv.status = 'current'
 ```
