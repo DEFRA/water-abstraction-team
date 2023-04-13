@@ -7,6 +7,7 @@ We make best efforts to follow them when working in the legacy repos. There are 
 - [Add the .js extension](#add-the-js-extension)
 - [File names](#file-names)
 - [Functions](#functions)
+  - [Function naming conventions for services](#function-naming-conventions-for-services)
 - [Top of .js files](#top-of-js-files)
   - [Top of test.js files](#top-of-testjs-files)
 
@@ -72,6 +73,38 @@ materials.forEach((material) => {
 
 // Do not use Concise body version
 materials.forEach((material) => console.log(`${material} - ${material.length}`))
+```
+
+### Function naming conventions for services
+
+The bulk of our system's business logic resides in "services", each of which typically has a single task. This may be an individual step of a process, or it may be marshalling this multi-stage process. But either way, services tend to focus on doing one thing in particular.
+
+To this end, our convention is that services have a single exported function, called `go()`. Any functions used internally within the service should have a name starting with an underscore, to indicate that it's an internal function, and should not be exported.
+
+An example of service function naming would be as follows:
+
+```javascript
+async function go (elementId) {
+  const elementData = await _fetch(elementId)
+
+  return _format(elementData)
+}
+
+async function _fetch(elementId) {
+  const elementData = await ElementLookupService.go(elementId)
+
+  return elementData
+}
+
+function _format(elementData) {
+  return elementData.map((field) => {
+    return field.toUpperCase()
+  })
+}
+
+module.exports = {
+  go
+}
 ```
 
 ## Top of .js files
