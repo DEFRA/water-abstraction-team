@@ -1,7 +1,7 @@
 # Licences and charge versions with the supplementary billing flag set
 
 - **Business**
-- **2023-05-05**
+- **2023-06-09**
 - [WATER-4002](https://eaflood.atlassian.net/browse/WATER-4002)
 
 > For all licences (dead & current) that have a supplementary billing flag on them. Find the charge versions (including the charge version ID) and provide:
