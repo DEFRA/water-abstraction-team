@@ -39,6 +39,8 @@ Other naming conventions are
 - routes `thing.routes.js`
 - services `thing.service.js`
 
+Anytime an acronym is used in the naming of a file this should be written in capital letters, such as `convert-to-CSV.service.js`.
+
 Unit test files should be the same as the thing being tested with `.test` added to the end, for example `thing.service.test.js`. The `test/` folder structure should mirror the `app/` folder.
 
 ## Functions
@@ -127,6 +129,8 @@ module.exports = {
   go
 }
 ```
+
+Anytime an acronym is used in the naming of a private function this should be written in capital letters, such as `_convertToCSV()`.
 
 ## Top of .js files
 
