@@ -40,7 +40,7 @@ Other naming conventions are
 - routes `thing.routes.js`
 - services `thing.service.js`
 
-To ensure cross-platform compatibility file names should always been written in lower case. This includes the use of acronyms in the file name. For example `convert-to-csv.service.js`.
+To ensure cross-platform compatibility file names should always be written in lower case. This includes the use of acronyms in the file name. For example `convert-to-csv.service.js`.
 
 Unit test files should be the same as the thing being tested with `.test` added to the end, for example `thing.service.test.js`. The `test/` folder structure should mirror the `app/` folder.
 
