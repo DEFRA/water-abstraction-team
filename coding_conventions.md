@@ -6,6 +6,7 @@ We make best efforts to follow them when working in the legacy repos. There are 
 
 - [Add the .js extension](#add-the-js-extension)
 - [File names](#file-names)
+- [Modules](#modules)
 - [Functions](#functions)
   - [Function naming conventions for services](#function-naming-conventions-for-services)
 - [Top of .js files](#top-of-js-files)
@@ -39,9 +40,27 @@ Other naming conventions are
 - routes `thing.routes.js`
 - services `thing.service.js`
 
-Anytime an acronym is used in the naming of a file this should be written in capital letters, such as `convert-to-CSV.service.js`. This also means we should never start a file name with an acronym as file names shouldn't start with capital letters.
+To ensure cross-platform compatibility file names should always been written in lower case. This includes the use of acronyms in the file name. For example `convert-to-csv.service.js`.
 
 Unit test files should be the same as the thing being tested with `.test` added to the end, for example `thing.service.test.js`. The `test/` folder structure should mirror the `app/` folder.
+
+
+## Modules
+
+Modules should be named using CamelCase. The only exception to this is when an acronym is used in the name, then this should be in capital letters.
+
+```javascript
+/**
+ * Converts data to CSV format
+ * @module ConvertToCSVService
+ */
+
+// DON'T do this
+/**
+ * Converts data to CSV format
+ * @module ConvertToCsvService
+ */
+```
 
 ## Functions
 
