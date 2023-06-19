@@ -47,7 +47,7 @@ Unit test files should be the same as the thing being tested with `.test` added 
 
 ## Modules
 
-Modules should be named using CamelCase. The only exception to this is when an acronym is used in the name, then this should be in capital letters.
+Modules should be named using PascalCase. The only exception to this is when an acronym is used in the name, then this should be in capital letters.
 
 ```javascript
 /**
