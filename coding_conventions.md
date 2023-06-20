@@ -208,3 +208,58 @@ const ChargeModuleTokenService = require('../../app/services/charge-module-token
 
 // Start testing!
 ```
+## JSDoc Comments
+In node the standard way to document code is by using comments called [JSDoc]( https://jsdoc.app/) comments.
+ This style of comments has its own conventions that we follow.
+
+Comments begin with a slash-star-star (`/**`) and end with a star-slash (`*/`).
+
+Begin the JSDoc comment with a description of the code element, providing a clear and concise explanation of its purpose, behaviour, or usage.
+
+Tags: Use tags to provide additional information about the code element. Commonly used tags include `@param`, `@returns`, `@throws`, `@type`, `@example`, and `@see`.
+
+Specify the types of parameters, return values, and variables using curly braces {}. We use built-in JavaScript types (string, number, boolean, etc.) For arrays we notate this using square brackets `[]`
+
+For our JSDoc comments we don't end the sentence with a full stop and we don't use any dashes between the variable names and description sentence. We also put spaces in between our descriptions.
+
+```javascript
+// Good comment
+/**
+ * Description of the code element
+ *
+ * @param {String} name Description of the params
+ *
+ * @returns {String} Description of what is returned
+ */
+
+// Bad comment
+/**
+ * Description of the code element.
+ * @param {String} name - Description of the params.
+ * @returns {String} - Description of what is returned.
+ */
+
+```
+
+Previously, we were not documenting promises in the JSDoc comments when the code we were documenting returned a promise. However we later discovered that this caused unexpected behaviour with SonarCloud and VSCode. SonarCloud flagged 'redundant awaits' even though they were actually necessary, and in VSCode, the await keyword was underlined We now understand that this occurred because we were not including documentation about promises in the JSDoc comments. SonarCloud and CSCode rely on JSDoc to understand the code's behaviour, and without proper documentation, they interpreted anything related to promises (such as the await keyword) as incorrect or redundant.
+
+Going forward we will ensure that promises are correctly documented in JSDoc comments to address the issues we encountered. Here is how we can document promises in JSDoc comments.
+
+```javascript
+/**
+ * Fetches user data asynchronously from an API
+ *
+ * @async
+ * @function fetchUserData
+ *
+ * @param {String} userId The ID of the user
+ *
+ * @returns {Promise<User>} A promise that resolves to the user data
+ */
+
+async function fetchUserData(userId) {
+  // Async function implementation
+}
+
+```
+In the example above, 'User' represents the type of data that the promise resolves to. By documenting the promise and its resolved type, we provide clear information about the expected behaviour of the asynchronous operation.
