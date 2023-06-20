@@ -243,14 +243,16 @@ Tags: Use tags to provide additional information about the code element. Commonl
 
 Specify the types of parameters, return values, and variables using curly braces {}. We use built-in JavaScript types (string, number, boolean, etc.) For arrays we notate this using square brackets `[]`
 
-For our JSDoc comments we don't end the sentence with a full stop and we don't use any dashes between the variable names and description sentence. We also put spaces in between our descriptions.
+For our JSDoc comments we don't end the sentence with a full stop (unless we include an expanded description). We also put spaces in between our descriptions.
 
 ```javascript
 // Good comment
 /**
- * Description of the code element
+ * Short description of the code element
  *
- * @param {String} name Description of the params
+ * Expanded description, notes or examples if necessary.
+ *
+ * @param {String} name - Description of the params
  *
  * @returns {String} Description of what is returned
  */
@@ -258,13 +260,13 @@ For our JSDoc comments we don't end the sentence with a full stop and we don't u
 // Bad comment
 /**
  * Description of the code element.
- * @param {String} name - Description of the params.
- * @returns {String} - Description of what is returned.
+ * @param {String} name Description of the params.
+ * @returns {String} Description of what is returned.
  */
 
 ```
 
-Previously, we were not documenting promises in the JSDoc comments when the code we were documenting returned a promise. However we later discovered that this caused unexpected behaviour with SonarCloud and VSCode. SonarCloud flagged 'redundant awaits' even though they were actually necessary, and in VSCode, the await keyword was underlined We now understand that this occurred because we were not including documentation about promises in the JSDoc comments. SonarCloud and CSCode rely on JSDoc to understand the code's behaviour, and without proper documentation, they interpreted anything related to promises (such as the await keyword) as incorrect or redundant.
+Previously, we were not documenting promises in the JSDoc comments when the code we were documenting returned a promise. However we later discovered that this caused unexpected behaviour with SonarCloud and VSCode. SonarCloud flagged 'redundant awaits' even though they were actually necessary, and in VSCode, the await keyword was underlined We now understand that this occurred because we were not including documentation about promises in the JSDoc comments. SonarCloud and VSCode rely on JSDoc to understand the code's behaviour, and without proper documentation, they interpreted anything related to promises (such as the await keyword) as incorrect or redundant.
 
 Going forward we will ensure that promises are correctly documented in JSDoc comments to address the issues we encountered. Here is how we can document promises in JSDoc comments.
 
