@@ -274,12 +274,9 @@ Going forward we will ensure that promises are correctly documented in JSDoc com
 /**
  * Fetches user data asynchronously from an API
  *
- * @async
- * @function fetchUserData
+ * @param {String} userId - The ID of the user
  *
- * @param {String} userId The ID of the user
- *
- * @returns {Promise<User>} A promise that resolves to the user data
+ * @returns {Promise<User>} The user data
  */
 
 async function fetchUserData(userId) {
