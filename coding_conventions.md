@@ -232,56 +232,55 @@ const ChargeModuleTokenService = require('../../app/services/charge-module-token
 // Start testing!
 ```
 ## JSDoc Comments
-In node the standard way to document code is by using comments called [JSDoc]( https://jsdoc.app/) comments.
- This style of comments has its own conventions that we follow.
+
+In node the standard way to document code is by using comments called [JSDoc]( https://jsdoc.app/) comments. This style of comments has its own conventions that we follow.
 
 Comments begin with a slash-star-star (`/**`) and end with a star-slash (`*/`).
 
-Begin the JSDoc comment with a description of the code element, providing a clear and concise explanation of its purpose, behaviour, or usage.
+Begin the JSDoc comment with a one-line short description of the code element, providing a clear and concise explanation of its purpose, behaviour or intended usage.
 
-Tags: Use tags to provide additional information about the code element. Commonly used tags include `@param`, `@returns`, `@throws`, `@type`, `@example`, and `@see`.
 
-Specify the types of parameters, return values, and variables using curly braces {}. We use built-in JavaScript types (string, number, boolean, etc.) For arrays we notate this using square brackets `[]`
+Use the [@param](https://jsdoc.app/tags-param.html) and [@returns](https://jsdoc.app/tags-returns.html) tags to provide details on the arguments a method expects and what it returns.
 
-For our JSDoc comments we don't end the sentence with a full stop (unless we include an expanded description). We also put spaces in between our descriptions.
+For example:
+- `@param {string} name - Name of the licensee` A simple primitive param
+- `@param {number[]} readings - Meter readings for the last week` A param that is an array
+- `@returns {Object} Details about the abstraction purpose` Documenting the return value
 
-```javascript
-// Good comment
-/**
- * Short description of the code element
- *
- * Expanded description, notes or examples if necessary.
- *
- * @param {String} name - Description of the params
- *
- * @returns {String} Description of what is returned
- */
+We don't end the method short description or the param and return descriptions with a full stop. If an expanded description is added treat it as a normal document and do finish the sentences with full stops.
 
-// Bad comment
-/**
- * Description of the code element.
- * @param {String} name Description of the params.
- * @returns {String} Description of what is returned.
- */
-
-```
-
-Previously, we were not documenting promises in the JSDoc comments when the code we were documenting returned a promise. However we later discovered that this caused unexpected behaviour with SonarCloud and VSCode. SonarCloud flagged 'redundant awaits' even though they were actually necessary, and in VSCode, the await keyword was underlined We now understand that this occurred because we were not including documentation about promises in the JSDoc comments. SonarCloud and VSCode rely on JSDoc to understand the code's behaviour, and without proper documentation, they interpreted anything related to promises (such as the await keyword) as incorrect or redundant.
-
-Going forward we will ensure that promises are correctly documented in JSDoc comments to address the issues we encountered. Here is how we can document promises in JSDoc comments.
-
+The following is an example of a 'good' method document comment.
 ```javascript
 /**
- * Fetches user data asynchronously from an API
+ * Fetch all SROC charge versions linked to licences flagged for supplementary billing
  *
- * @param {String} userId - The ID of the user
+ * This is used to get the charge versions that will be used to generate the bills for a given billing period. Excluding
+ * those with a `draft` status, it selects all `charge_version` records that have a start date before the billing period
+ * end date, and an end date that is either null or after the billing period's start date.
  *
- * @returns {Promise<User>} The user data
+ * They must also be linked to licences in the specified region flagged for SROC supplementary billing. The results
+ * include linked models that will be needed in the billing process, for example, a charge version's `charge_elements`.
+ *
+ * @param {String} regionId - UUID of the region being billed that the licences must be linked to
+ * @param {Object} billingPeriod - Object with a `startDate` and `endDate` property representing the period being billed
+ *
+ * @returns {Promise<Object[]>} An array of matching charge versions
  */
-
-async function fetchUserData(userId) {
-  // Async function implementation
-}
-
+async function go (regionId, billingPeriod) {
 ```
-In the example above, 'User' represents the type of data that the promise resolves to. By documenting the promise and its resolved type, we provide clear information about the expected behaviour of the asynchronous operation.
+
+### Promises
+
+Where a function is [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) the fact a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) is returned should be documented in the `@return`.
+
+Previously, we were not documenting when a function returned a promise. We then discovered this caused unexpected behaviour with SonarCloud and VSCode. Both flagged 'redundant awaits' even though they were necessary.
+We now understand that this was because we were not including documenting when a function returned a promise. SonarCloud and VSCode rely on JSDoc to understand the code's behaviour and without proper documentation, they interpreted anything related to promises (such as the `await` keyword) as incorrect or redundant.
+
+The 'good' example demonstrated how to document the Promise
+
+```javascript
+/**
+ * @returns {Promise<Object[]>} An array of matching charge versions
+ */
+async function go (regionId, billingPeriod) {
+```
