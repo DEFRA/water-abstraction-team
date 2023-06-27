@@ -11,6 +11,8 @@ We make best efforts to follow them when working in the legacy repos. There are 
   - [Function naming conventions for services](#function-naming-conventions-for-services)
 - [Top of .js files](#top-of-js-files)
   - [Top of test.js files](#top-of-testjs-files)
+- [JSDoc Comments](#JSDoc-Comments)
+  - [Promises](#promises)
 
 ## Add the .js extension
 
