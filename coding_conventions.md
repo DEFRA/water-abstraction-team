@@ -241,7 +241,6 @@ Comments begin with a slash-star-star (`/**`) and end with a star-slash (`*/`).
 
 Begin the JSDoc comment with a one-line short description of the code element, providing a clear and concise explanation of its purpose, behaviour or intended usage.
 
-
 Use the [@param](https://jsdoc.app/tags-param.html) and [@returns](https://jsdoc.app/tags-returns.html) tags to provide details on the arguments a method expects and what it returns.
 
 For example:
@@ -278,7 +277,7 @@ Where a function is [async](https://developer.mozilla.org/en-US/docs/Web/JavaScr
 Previously, we were not documenting when a function returned a promise. We then discovered this caused unexpected behaviour with SonarCloud and VSCode. Both flagged 'redundant awaits' even though they were necessary.
 We now understand that this was because we were not including documenting when a function returned a promise. SonarCloud and VSCode rely on JSDoc to understand the code's behaviour and without proper documentation, they interpreted anything related to promises (such as the `await` keyword) as incorrect or redundant.
 
-The 'good' example demonstrated how to document the Promise
+The 'good' example demonstrates how to document the Promise.
 
 ```javascript
 /**
