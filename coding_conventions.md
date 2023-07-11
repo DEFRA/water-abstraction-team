@@ -11,6 +11,8 @@ We make best efforts to follow them when working in the legacy repos. There are 
   - [Function naming conventions for services](#function-naming-conventions-for-services)
 - [Top of .js files](#top-of-js-files)
   - [Top of test.js files](#top-of-testjs-files)
+- [JSDoc Comments](#JSDoc-Comments)
+  - [Promises](#promises)
 
 ## Add the .js extension
 
@@ -230,4 +232,56 @@ const RequestLib = require('../../app/lib/request.lib.js')
 const ChargeModuleTokenService = require('../../app/services/charge-module-token.service.js')
 
 // Start testing!
+```
+## JSDoc Comments
+
+In node the standard way to document code is by using comments called [JSDoc]( https://jsdoc.app/) comments. This style of comments has its own conventions that we follow.
+
+Comments begin with a slash-star-star (`/**`) and end with a star-slash (`*/`).
+
+Begin the JSDoc comment with a one-line short description of the code element, providing a clear and concise explanation of its purpose, behaviour or intended usage.
+
+Use the [@param](https://jsdoc.app/tags-param.html) and [@returns](https://jsdoc.app/tags-returns.html) tags to provide details on the arguments a method expects and what it returns.
+
+For example:
+- `@param {string} name - Name of the licensee` A simple primitive param
+- `@param {number[]} readings - Meter readings for the last week` A param that is an array
+- `@returns {Object} Details about the abstraction purpose` Documenting the return value
+
+We don't end the method short description or the param and return descriptions with a full stop. If an expanded description is added treat it as a normal document and do finish the sentences with full stops.
+
+The following is an example of a 'good' method document comment.
+```javascript
+/**
+ * Fetch all SROC charge versions linked to licences flagged for supplementary billing
+ *
+ * This is used to get the charge versions that will be used to generate the bills for a given billing period. Excluding
+ * those with a `draft` status, it selects all `charge_version` records that have a start date before the billing period
+ * end date, and an end date that is either null or after the billing period's start date.
+ *
+ * They must also be linked to licences in the specified region flagged for SROC supplementary billing. The results
+ * include linked models that will be needed in the billing process, for example, a charge version's `charge_elements`.
+ *
+ * @param {String} regionId - UUID of the region being billed that the licences must be linked to
+ * @param {Object} billingPeriod - Object with a `startDate` and `endDate` property representing the period being billed
+ *
+ * @returns {Promise<Object[]>} An array of matching charge versions
+ */
+async function go (regionId, billingPeriod) {
+```
+
+### Promises
+
+Where a function is [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) the fact a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) is returned should be documented in the `@return`.
+
+Previously, we were not documenting when a function returned a promise. We then discovered this caused unexpected behaviour with SonarCloud and VSCode. Both flagged 'redundant awaits' even though they were necessary.
+We now understand that this was because we were not including documenting when a function returned a promise. SonarCloud and VSCode rely on JSDoc to understand the code's behaviour and without proper documentation, they interpreted anything related to promises (such as the `await` keyword) as incorrect or redundant.
+
+The 'good' example demonstrates how to document the Promise.
+
+```javascript
+/**
+ * @returns {Promise<Object[]>} An array of matching charge versions
+ */
+async function go (regionId, billingPeriod) {
 ```
