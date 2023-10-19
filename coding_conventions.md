@@ -9,6 +9,7 @@ We make best efforts to follow them when working in the legacy repos. There are 
 - [Modules](#modules)
 - [Functions](#functions)
   - [Function naming conventions for services](#function-naming-conventions-for-services)
+- [Line length](#line-length)
 - [Top of .js files](#top-of-js-files)
   - [Top of test.js files](#top-of-testjs-files)
 - [JSDoc Comments](#JSDoc-Comments)
@@ -152,6 +153,29 @@ module.exports = {
 ```
 
 Anytime an acronym is used in the naming of a private function this should be written in capital letters, such as `_convertToCSV()`. This also means we should never start a function name with an acronym as functions shouldn't start with capital letters.
+
+## Line length
+
+With one exception, lines should be kept to 120 characters or less. For example, if you are have a method and your params, because they have lovely expressive names 😁, take you over the 120 limit then split them over multiple lines.
+
+```javascript
+// Bad!
+async function performMagic (eyeOfLesserSpottedNewt, giantFruitBatDrool, pinchOfDragonWort, somethingThatHasReallyLongName) {
+  // Do something
+}
+
+// Good!
+async function performMagic (
+  eyeOfLesserSpottedNewt,
+  giantFruitBatDrool,
+  pinchOfDragonWort,
+  somethingThatHasReallyLongName
+  ) {
+  // Do something
+}
+```
+
+The same goes when calling a method. The exception is when you have a string you can't break across multiple lines. This applies to `describe()` and `it()` in our test files; we'd rather a more verbose description than worry about the convention.
 
 ## Top of .js files
 
