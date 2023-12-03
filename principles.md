@@ -1,5 +1,7 @@
 # Principles
 
+> This repo was created in 2022 when the new tech team took over Water Abstraction. Any standards or principles stated here are what we _aspire_ the project to meet!
+
 As a technology team in Defra we are called on to think about and use a number of principles from a number of sources.
 
 This page gives some focus to those things that are key to us.

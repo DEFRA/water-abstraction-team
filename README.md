@@ -4,8 +4,6 @@ A team of storming 🌧️ folk dedicated to supporting all the things **water**
 
 This acts as a repo of guides and documents specific to the team, plus it's where we manage our list of issues rather than trying to manage them in individual projects.
 
-> This repo was created in 2022 when the new tech team took over Water Abstraction. Any standards or principles stated here are what we _aspire_ the project to meet!
-
 ## Contents
 
 - [API examples](/api/README.md)
