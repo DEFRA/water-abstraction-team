@@ -143,4 +143,5 @@ Then you'll need the following tools installed as a minimum
 - [git](https://git-scm.com/) well duh!
 - [OpenVPN](https://openvpn.net/client/) the VPN needs to be running to connect to our Jenkins and GitLab instances, and our AWS environments
 - [Docker desktop](https://www.docker.com/products/docker-desktop/) the local development environment is built using Docker
+- [Jitsi Meet](https://meet.jit.si/) an open source video conferencing tool we use. You won't be able to use MS Teams on the Mac and we have no money for commercial tools. So, instead the tech team use **Jitsi** as our video conferencing tool as it is not only free, but places no limits on meeting times
 - [VSCode](https://code.visualstudio.com/) you are not required to use this as your IDE. But the current team are all VSCode users so the commands to build and maintain the local environment are baked into VSCode as custom tasks. Install it so we can help you get your local environment up and running. Then decide if you want to take what we have done and apply it to your editor of choice
