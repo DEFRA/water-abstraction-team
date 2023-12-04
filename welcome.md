@@ -8,6 +8,9 @@ We think you're joining a great team who will do everything they can to support 
 
 - [Why are we here?](#why-are-we-here)
 - [Where are we now?](#where-are-we-now)
+- [What is the service?](#what-is-the-service)
+- [The tech](#the-tech)
+- [It's my first day](#its-my-first-day)
 
 ## Why are we here?
 
