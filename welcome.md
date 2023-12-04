@@ -60,7 +60,7 @@ The final thing to know is we use [Objection.js](https://vincit.github.io/object
 
 They opted for a microservice architecture, comprised of 9 applications (the word 'service' crops up all over the place meaning different things. So, we refer to the 'running' services as applications or apps). Those 9 apps were based on 8 primary repositories with a handful of supporting package repos.
 
-The primary database is [PostgreSQL](https://www.postgresql.org/). The team took advantage of [schemas](https://www.postgresql.org/docs/current/ddl-schemas.html) so though only 1 DB is created, each app (ish!) manages it's own data within a matching schema.
+The primary database is [PostgreSQL](https://www.postgresql.org/). The team took advantage of [schemas](https://www.postgresql.org/docs/current/ddl-schemas.html) so though only 1 DB is created, each app manages it's own data within a matching schema (sort of!).
 
 The apps were primarily domain based (CRM, IDM, Returns, etc). So, if the `returns` app needs to check a user, it will request the info from the `idm` app.
 
@@ -68,13 +68,13 @@ Where apps have processes that involve many steps or transactions it was decided
 
 ### Architecture - Now
 
-Everything that was found when the current team took over is now defined as 'legacy'. We still have to maintain the legacy code and infrastructure. But the plan is to move to all functionality to a single app, repo and schema and then retire everything that is 'legacy'.
+Everything that was found when the current team took over is now defined as 'legacy'. We still have to maintain the legacy code and infrastructure. But the plan is to move all functionality to a single app, repo and schema and then retire everything that is 'legacy'.
 
 So, all new work takes place in [water-abstraction-system](https://github/DEFRA/water-abstraction-system) (`water-abstraction-service` was already taken!). That covers completely new work, or where we have to make significant changes to something in the legacy code. When this happens we'll rewrite it in our new repo.
 
 A major challenge is the legacy data. Not only is it split across schemas, naming conventions have not always been followed and what has been used is inconsistent. Also, table names will differ from entity names in the code, which in turn will differ to the names used in the UI. At the time of writing this guide, we're in the process of using [Updatable Views](https://www.postgresql.org/docs/current/sql-createview.html) to resolve these issues and give the impression everything is in a single schema.
 
-_When_ we achieve this goal (!) the final step will be to host the service using [AWS ECS](https://aws.amazon.com/ecs/) (Docker being [our standard](https://github.com/DEFRA/software-development-standards/blob/master/standards/deployment_standards.md#we-use-docker-containers-for-delivery-of-all-bespoke-software-being-deployed-to-aws-and-azure) means of deployment).
+_When_ we achieve our goal of a single app (!) the final step will be to host the service using [AWS ECS](https://aws.amazon.com/ecs/) (Docker being [Defra's standard](https://github.com/DEFRA/software-development-standards/blob/master/standards/deployment_standards.md#we-use-docker-containers-for-delivery-of-all-bespoke-software-being-deployed-to-aws-and-azure) for app deployment).
 
 ### Repos
 
@@ -89,22 +89,26 @@ A listing of the various legacy and current repos we are responsible for.
 - [water-abstraction-reporting](https://github.com/DEFRA/water-abstraction-reporting) - Built to generate 3 reports (CSV files). However, all 3 were wrong and never used or fixed. We are on the cusp of removing this app and repo from the service
 - [water-abstraction-returns](https://github.com/DEFRA/water-abstraction-returns) - Handles most of the returns data. Is essentially a CRUD interface to the returns tables
 - [water-abstraction-service](https://github.com/DEFRA/water-abstraction-service) - The backbone of the legacy service. Most functionality is here. The `water-abstraction-ui` uses this as it's primary backend. At some point the previous team opted to manage all new data using this service rather than create more microservices, for example, charging data is found in its schema. The majority of our maintenance work is done in this repo. The current team made a change which means the code is used to drive 2 apps
-- [water-abstraction-tactical-crm](https://github.com/DEFRA/water-abstraction-tactical-crm) - Was a tactical solution whilst the team waited for a strategic 'single view of the customer' to be delivered. This never happened. Because of this the previous team made an interrupted attempt to migrate to a less generic customer table schema. So, this one apps interacts with 2 schemas! However, it again is just a CRUD interface to the customer data based tables
+- [water-abstraction-tactical-crm](https://github.com/DEFRA/water-abstraction-tactical-crm) - Was a tactical solution whilst the team waited for a strategic 'single view of the customer' to be delivered. This never happened. Because of this the previous team made an incomplete attempt to migrate to a less generic customer table schema. So, this one apps interacts with 2 schemas! However, it again is just a CRUD interface to the customer data based tables
 - [water-abstraction-tactical-idm](https://github.com/DEFRA/water-abstraction-tactical-idm) - Was a tactical solution whilst the team waited for a strategic 'single view of the customer' (as a user) to be delivered. This never happened. Now it is just a CRUD interface to the user data based tables
 - [water-abstraction-ui](https://github.com/DEFRA/water-abstraction-ui) - Frontend for the service. The repo contains the code for both the external and internal apps. Using **PM2** each are run as a separate app.
 
 #### Legacy packages
 
-- [hapi-pg-rest-api](https://github.com/DEFRA/hapi-pg-rest-api) - Built to automatically generate a REST API for a specified table
-- [node-hapi-airbrake-js](https://github.com/DEFRA/node-hapi-airbrake-js) - A Hapi plugin wrapper for [airbrake-js](https://www.npmjs.com/package/airbrake-js) which is used to automatically capture errors and report them to a central service
+- [hapi-pg-rest-api](https://github.com/DEFRA/hapi-pg-rest-api) - Built to automatically generate a REST API for a specified table. This is used sporadically across the various repos. We find older apps and endpoints use it but at some point the previous team chose to abandon it
+- [node-hapi-airbrake-js](https://github.com/DEFRA/node-hapi-airbrake-js) - A Hapi plugin wrapper for [airbrake-js](https://www.npmjs.com/package/airbrake-js) which is used to automatically capture errors and report them to a central service. Was forked from something another Defra team made, neither of which have been maintained (and **airbrake-js** is deprecated)
 - [water-abstraction-helpers](https://github.com/DEFRA/water-abstraction-helpers) - Shared code used across the legacy repos
 
 #### Current repos
 
 - [water-abstraction-acceptance-tests](https://github.com/DEFRA/water-abstraction-acceptance-tests) - Houses our Cypress acceptance tests. These were inherited from the previous team but were maintained inside the `water-abstraction-ui` repo. This made it hard to update dependencies and run them against our environments. Plus they used Cypress v8 and did not have test isolation so all had to be restructured. We used the opportunity to move them to their own repo
-- [water-abstraction-system](https://github.com/DEFRA/water-abstraction-system) - Home of all future work and where one day we hope all legacy functionality will be migrated to. Acts as both a frontend and an API. New background tasks, for example, are triggered by calls from the legacy UI. But also as time goes on either the UI redirects to, are has links to pages in `water-abstraction-system`. We hope you like it, because it is where you'll be spending most of your time
-- [water-abstraction-team](https://github.com/DEFRA/water-abstraction-team) - Home of this guide, and others like our [Coding conventions](/coding_conventions.md) and [Ways of working](ways_of_working.md). As developers we are most comfortable maintaining our documentation using git and GitHub. We already work with both and markdown for documentation. Doing it in this way means as a team we can still peer review contributions made and use the commit history to see how things have changed over time. This is also the place we maintain our central list of issues. These are specific to our work maintaining the service, for example, a problem with our local environment or an idea for a new team guide. Actual bugs/issues should be recorded in [Jira](https://eaflood.atlassian.net/jira/software/c/projects/WATER/boards/96)
+- [water-abstraction-system](https://github.com/DEFRA/water-abstraction-system) - Home of all future work and where one day we hope all legacy functionality will be migrated to. Acts as both a frontend and an API. New background tasks, for example, are triggered by calls from the legacy UI. But also as time goes on either the UI redirects to, are has links to pages in `water-abstraction-system`. We hope you like it, because it is where you'll be spending most of your time 😅❤️
+- [water-abstraction-team](https://github.com/DEFRA/water-abstraction-team) - Home of this guide, and others like our [Coding conventions](/coding_conventions.md) and [Ways of working](ways_of_working.md). As developers we are most comfortable maintaining our documentation using git and GitHub. We already work with both plus markdown for documentation. Doing it in this way means as a team we can still peer review contributions made and use the commit history to see how things have changed over time. This is also the place we maintain our central list of issues. These are specific to our work maintaining the service, for example, a problem with our local environment or an idea for a new team guide. Actual bugs/issues should be recorded in the backlog in [Jira](https://eaflood.atlassian.net/jira/software/c/projects/WATER/boards/96)
 
 ## It's my first day
 
-First of all, well done, you've found this page and made it this far! You probably have a standard Defra laptop (referred to as on-net or 'the brick') but are still waiting on your Mac (your off-net) machine. The on-net is a locked down machine where you can access the intranet, your email, and MS Teams which you'll need for calls with the wider delivery team. But because of the restrictions on them, we can't use them for development. So, you'll also be supplied with a Mac which has no restrictions, but which must never be connected to the main Defra network (hence off-net).
+First of all, well done, you've found this page and made it this far! You probably have a standard Defra laptop (referred to as on-net or 'the brick') but are still waiting on your Mac (your off-net) machine.
+
+The on-net is a locked down machine where you can access the intranet, your email, and MS Teams which you'll need for calls with the wider delivery team. But because of the restrictions on them, we can't use them for development.
+
+So, you'll also be supplied with a Mac which has no restrictions, but which must never be connected to the main Defra network (hence off-net).
