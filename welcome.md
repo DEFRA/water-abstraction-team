@@ -105,10 +105,42 @@ A listing of the various legacy and current repos we are responsible for.
 - [water-abstraction-system](https://github.com/DEFRA/water-abstraction-system) - Home of all future work and where one day we hope all legacy functionality will be migrated to. Acts as both a frontend and an API. New background tasks, for example, are triggered by calls from the legacy UI. But also as time goes on either the UI redirects to, are has links to pages in `water-abstraction-system`. We hope you like it, because it is where you'll be spending most of your time 😅❤️
 - [water-abstraction-team](https://github.com/DEFRA/water-abstraction-team) - Home of this guide, and others like our [Coding conventions](/coding_conventions.md) and [Ways of working](ways_of_working.md). As developers we are most comfortable maintaining our documentation using git and GitHub. We already work with both plus markdown for documentation. Doing it in this way means as a team we can still peer review contributions made and use the commit history to see how things have changed over time. This is also the place we maintain our central list of issues. These are specific to our work maintaining the service, for example, a problem with our local environment or an idea for a new team guide. Actual bugs/issues should be recorded in the backlog in [Jira](https://eaflood.atlassian.net/jira/software/c/projects/WATER/boards/96)
 
+#### Other repos
+
+We have a few other repos which are hosted on an internal [GitLab](https://about.gitlab.com/). You'll need to complete the service request mentioned in [It's my first day](#its-my-first-day) before you can access them.
+
+- **wal-address-facade-1-1** - Contains our address lookup API. (It's a long story why it is here 😩)
+- **wal-dev-environment** - Everything you need to build a working WRLS environment on your machine. This is the environment the current team build, run and use when making changes to the service
+- **wal-jenkins** - The Jenkins pipelines that handle our deployment
+
 ## It's my first day
 
 First of all, well done, you've found this page and made it this far! You probably have a standard Defra laptop (referred to as on-net or 'the brick') but are still waiting on your Mac (your off-net) machine.
 
 The on-net is a locked down machine where you can access the intranet, your email, and MS Teams which you'll need for calls with the wider delivery team. But because of the restrictions on them, we can't use them for development.
 
-So, you'll also be supplied with a Mac which has no restrictions, but which must never be connected to the main Defra network (hence off-net).
+You'll also be supplied with a Mac which has no restrictions, but which must never be connected to the main Defra network (hence off-net). Problem is, this normally takes a few days to arrive after your first day and you'll need this before you can get a local environment up and running.
+
+So, we're afraid your first day or two is likely to be reading stuff or listening to people. Feel free to use this time to also dig into any of the technologies you are not familiar with.
+
+### Do this first
+
+On your brick track down the myIT portal and search for [CCOE Azure/AWS Non-Production Service Request](https://defragroup.service-now.com/esc?id=sc_cat_item&table=sc_cat_item&sys_id=cedac95b1b224510adf0eb53b24bcb63). Complete the form and submit the request (the current team will help you with this). This request will go to our fabulous friends on the AWS web-ops team who will then ensure you can access
+
+- our Jenkins instance
+- our GitLab instance
+- our environments via a VPN account they'll create for you
+- the AWS console for non-production logs
+
+## I have my Mac
+
+Fantastic! We can now get the ball rolling on setting up your local environment. If it's not been cleaned down nicely feel free to factory reset it. Then get yourself setup and ensure you are running the latest version of [macOS](https://en.wikipedia.org/wiki/MacOS).
+
+We then ask that you enable [FileVault](https://support.apple.com/en-gb/guide/mac-help/mh11785/mac) and get yourself a Virus tool. We have no licences for this so you'll need to track down a free version. Current team favourite is [Avast](https://www.avast.com/en-gb/index#mac).
+
+Then you'll need the following tools installed as a minimum
+
+- [git](https://git-scm.com/) well duh!
+- [OpenVPN](https://openvpn.net/client/) the VPN needs to be running to connect to our Jenkins and GitLab instances, and our AWS environments
+- [Docker desktop](https://www.docker.com/products/docker-desktop/) the local development environment is built using Docker
+- [VSCode](https://code.visualstudio.com/) you are not required to use this as your IDE. But the current team are all VSCode users so the commands to build and maintain the local environment are baked into VSCode as custom tasks. Install it so we can help you get your local environment up and running. Then decide if you want to take what we have done and apply it to your editor of choice
