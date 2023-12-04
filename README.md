@@ -4,6 +4,8 @@ A team of storming 🌧️ folk dedicated to supporting all the things **water**
 
 This acts as a repo of guides and documents specific to the team, plus it's where we manage our list of issues rather than trying to manage them in individual projects.
 
+> New to the team? Then head to the [welcome guide](welcome.md) first.
+
 ## Contents
 
 - [API examples](/api/README.md)
@@ -16,6 +18,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 - [Request for Change (RfC)](/rfc/README.md)
 - [Queries](/queries/README.md)
 - [Ways of working](ways_of_working.md)
+- [Welcome](welcome.md)
 
 ## Otherwise known as
 
