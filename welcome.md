@@ -125,12 +125,16 @@ So, we're afraid your first day or two is likely to be reading stuff or listenin
 
 ### Do this first
 
-On your brick track down the myIT portal and search for [CCOE Azure/AWS Non-Production Service Request](https://defragroup.service-now.com/esc?id=sc_cat_item&table=sc_cat_item&sys_id=cedac95b1b224510adf0eb53b24bcb63). Complete the form and submit the request (the current team will help you with this). This request will go to our fabulous friends on the AWS web-ops team who will then ensure you can access
+The team tech lead needs to submit a [CCOE Azure/AWS Non-Production Service Request](https://defragroup.service-now.com/esc?id=sc_cat_item&table=sc_cat_item&sys_id=cedac95b1b224510adf0eb53b24bcb63) on the **myIT** portal to ensure you have access to
 
 - our Jenkins instance
 - our GitLab instance
 - our environments via a VPN account they'll create for you
 - the AWS console for non-production logs
+
+This request will go to our fabulous friends on the AWS web-ops team who will get all this sorted for you.
+
+Feel free to ask whether they have remembered to do this!
 
 ## I have my Mac
 
