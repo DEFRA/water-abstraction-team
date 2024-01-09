@@ -11,6 +11,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 - [API examples](/api/README.md)
 - [Coding conventions](/coding_conventions.md)
 - [Contributing to this project](/contributing.md)
+- [Jobs](/jobs/README.md)
 - [Principles](principles.md)
 - [Publishing NPM packages](/npm/publishing.md)
 - [Redis notes](/redis_notes.md)
