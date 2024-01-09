@@ -39,3 +39,56 @@ Refer to the following guides for what background jobs are running in each app
 - [water-abstraction-import](/jobs/import.md)
 - [water-abstraction-service](/jobs/service.md)
 - [water-abstraction-system](/jobs/system.md)
+
+### A day of jobs
+
+Using the information we have gathered about the background jobs running in the service we have attempted to compile a timeline for what is happening when. The schedule for some jobs depends on when the an app is started and others only run on week days. So, this example imagines a release of WRLS has just been deployed to `production` at 10:00AM on a Monday, which will cause the apps to restart.
+
+> - [Check status](/jobs/service.md#check-status) is run every 15 seconds
+> - [Refresh event](/jobs/service.md#refresh-event) is run every 1 minute
+> - [Send message](/jobs/service.md#send-message) is run every 1 minute
+
+|Time|Job|App|
+|----|---|---|
+|10:00|[Tracker](/jobs/import.md#tracker)|[water-abstraction-import](/jobs/import.md)|
+|11:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|12:00|[Check for updated invoice accounts](/jobs/service.md#check-for-updated-invoice-accounts)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Licence not in charge version workflow](/jobs/service.md#licence-not-in-charge-version-workflow)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|13:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|14:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|15:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|16:00|[Charge Categories Sync](/jobs/service.md#charge-categories-sync)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Gauging Stations Sync](/jobs/service.md#gauging-stations-sync)|[water-abstraction-service](/jobs/service.md)|
+|17:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|18:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Digitise To Licence Gauging Stations](/jobs/service.md#digitise-to-licence-gauging-stations)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Digitise to Licence Version Purpose (LVP) Sync](/jobs/service.md#digitise-to-licence-version-purpose-lvp-sync)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Licence not in charge version workflow](/jobs/service.md#licence-not-in-charge-version-workflow)|[water-abstraction-service](/jobs/service.md)|
+|19:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|20:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|20:15|[Time limited](/jobs/system.md#time-limited)|[water-abstraction-system](/jobs/system.md)|
+|21:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|22:00|[Charge Categories Sync](/jobs/service.md#charge-categories-sync)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Gauging Stations Sync](/jobs/service.md#gauging-stations-sync)|[water-abstraction-service](/jobs/service.md)|
+|23:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|00:00|[Check for updated invoice accounts](/jobs/service.md#check-for-updated-invoice-accounts)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Licence not in charge version workflow](/jobs/service.md#licence-not-in-charge-version-workflow)|[water-abstraction-service](/jobs/service.md)|
+|01:00|[Charging import (data)](/jobs/import.md#charging-import-data)|[water-abstraction-import](/jobs/import.md)|
+| -   |[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+| -   |[NALD import](/jobs/import.md#nald-import)|[water-abstraction-import](/jobs/import.md)|
+|02:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|03:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|04:00|[Charge Categories Sync](/jobs/service.md#charge-categories-sync)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Gauging Stations Sync](/jobs/service.md#gauging-stations-sync)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Licence import](/jobs/import.md#licence-import)|[water-abstraction-import](/jobs/import.md)|
+|05:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|06:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+| -   |[Licence not in charge version workflow](/jobs/service.md#licence-not-in-charge-version-workflow)|[water-abstraction-service](/jobs/service.md)|
+|07:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|08:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|09:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
