@@ -70,13 +70,6 @@ Updates the following tables
 
 Return versions depends on `water.licences` being populated, and this has a knock on effect to requirements and requirement purposes. This means until the NALD import has completed these 3 tables will fail to populate on a first run.
 
-### Tracker
-
-- **request** N/A
-- **schedule** 10:00 Monday to Friday
-
-It queries `water_import.job` for any failed 'jobs'. If there are any it generates an email sent via [Notify](https://www.notifications.service.gov.uk/) to the Product Owner and Delivery Manager. There always seems to be a few failed jobs so the PO and DM look for any jobs that aren't normally listed or a spike in the numbers. If they find any they will typically ask the team to investigate further.
-
 ### Licence import
 
 - **request** `POST /import/licences`
@@ -145,3 +138,10 @@ You can think of this as one job for all licences imported from NALD. In reality
 It uses the NALD data to populate and update `permit.licence` and `crm.document_header`. It populates the `returns.return_cycles` and `returns.returns` tables.
 
 > There is an option in the config; `overwriteReturns`. It is hard coded as `false` but it appears that if it is `true` it forces the import to not only recreate the return and return cycles data but it will also import existing submissions data (`returns.versions` and `returns.lines`).
+
+### Tracker
+
+- **request** N/A
+- **schedule** 10:00 Monday to Friday
+
+It queries `water_import.job` for any failed 'jobs'. If there are any it generates an email sent via [Notify](https://www.notifications.service.gov.uk/) to the Product Owner and Delivery Manager. There always seems to be a few failed jobs so the PO and DM look for any jobs that aren't normally listed or a spike in the numbers. If they find any they will typically ask the team to investigate further.
