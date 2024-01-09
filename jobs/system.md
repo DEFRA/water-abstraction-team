@@ -35,6 +35,6 @@ These schema `.tgz` files are then uploaded to AWS S3 where they can de download
 ### Time limited
 
 - **request** `POST /jobs/time-limited`
-- **schedule** TBC
+- **schedule** 20:15 every day
 
 Puts SROC licences into 'workflow' that have a related `purpose` that is due to expire in less than 50 days. See [WATER-3486](https://eaflood.atlassian.net/browse/WATER-3486) for more details if needed.
