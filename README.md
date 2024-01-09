@@ -4,15 +4,21 @@ A team of storming 🌧️ folk dedicated to supporting all the things **water**
 
 This acts as a repo of guides and documents specific to the team, plus it's where we manage our list of issues rather than trying to manage them in individual projects.
 
-> This repo was created in 2022 when the new tech team took over Water Abstraction. Any standards or principles stated here are what we _aspire_ the project to meet!
+> New to the team? Then head to the [welcome guide](welcome.md) first.
 
 ## Contents
 
 - [API examples](/api/README.md)
+- [Coding conventions](/coding_conventions.md)
 - [Contributing to this project](/contributing.md)
 - [Principles](principles.md)
-- [Ways of working](ways_of_working.md)
 - [Publishing NPM packages](/npm/publishing.md)
+- [Redis notes](/redis_notes.md)
+- [Releasing](/releasing/README.md)
+- [Request for Change (RfC)](/rfc/README.md)
+- [Queries](/queries/README.md)
+- [Ways of working](ways_of_working.md)
+- [Welcome](welcome.md)
 
 ## Otherwise known as
 
@@ -20,7 +26,7 @@ Those new to the EA or Defra may well be surprised by the explosion 💥 of acro
 
 - **WABS** Water Abstraction Service
 - **WAL** Water Abstraction Licence (commonly used by our web-ops team)
-- **WRLS** Water ??? Licence Service
+- **WRLS** Water Resource Licence Service
 
 ## Contributing to this project
 
