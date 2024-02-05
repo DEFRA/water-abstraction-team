@@ -10,6 +10,10 @@ There is no intention to maintain these scripts once they have been created. As 
 
 They are here purely as a record and for future reference.
 
+## Contents
+
+- [SROC charge info import](/ad-hoc/sroc-charge-info-import.md)
+
 ## How to
 
 For each script create a [Markdown](https://www.markdownguide.org/) document with this template as starter-for-ten. Add whatever additional sections you feel are needed.
