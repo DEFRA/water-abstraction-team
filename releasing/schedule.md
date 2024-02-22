@@ -78,7 +78,6 @@ This covers the steps involved for this release.
 - **web-ops** - Update property `DEPLOY_BRANCH=v2.25.1` in production `PRD_04_DEPLOY_PERMIT_REPOSITORY` job in Jenkins
 - **web-ops** - Update property `DEPLOY_BRANCH=v2.25.1` in production `PRD_05_DEPLOY_RETURNS` job in Jenkins
 - **web-ops** - Update property `DEPLOY_BRANCH=v2.25.1` in production `PRD_06_DEPLOY_IMPORT` job in Jenkins
-- **web-ops** - Update property `DEPLOY_BRANCH=v2.25.1` in production `PRD_07_DEPLOY_REPORTING` job in Jenkins
 - **web-ops** - Update property `DEPLOY_BRANCH=v2.26.0` in production `PRD_08_DEPLOY_UI` job in Jenkins
 
 ### Release day
@@ -89,7 +88,6 @@ This covers the steps involved for this release.
 - **web-ops** - Production `PRD_04_DEPLOY_PERMIT_REPOSITORY` job ran in Jenkins
 - **web-ops** - Production `PRD_05_DEPLOY_RETURNS` job ran in Jenkins
 - **web-ops** - Production `PRD_06_DEPLOY_IMPORT` job ran in Jenkins
-- **web-ops** - Production `PRD_07_DEPLOY_REPORTING` job ran in Jenkins
 - **web-ops** - Production `PRD_08_DEPLOY_UI` job ran in Jenkins
 
 - **delivery team** - Smoke test that service is up and operating as expected

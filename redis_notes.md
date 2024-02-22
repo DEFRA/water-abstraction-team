@@ -15,7 +15,6 @@ The repos that use Redis and which DB they are using is listed below for referen
 | App         | Live | Test |
 |-------------|------|------|
 | import      | 0    | -    |
-| reporting   | 3    | -    |
 | service     | 2    | 4    |
 | external UI | 0    | 5    |
 | internal UI | 1    | 6    |
