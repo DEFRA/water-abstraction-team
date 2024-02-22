@@ -8,6 +8,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 
 ## Contents
 
+- [Ad-hoc scripts](/ad-hoc/README.md)
 - [API examples](/api/README.md)
 - [Coding conventions](/coding_conventions.md)
 - [Contributing to this project](/contributing.md)
