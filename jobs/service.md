@@ -63,8 +63,6 @@ The jobs appear to be grouped by what they are related to.
   - [Charge Categories Sync](#charge-categories-sync)
   - [Check for updated invoice accounts](#check-for-updated-invoice-accounts)
   - [Customer file refresh](#customer-file-refresh)
-- Charge versions
-  - [Licence not in charge version workflow](#licence-not-in-charge-version-workflow)
 - Gauging stations
   - [Digitise To Licence Gauging Stations](#digitise-to-licence-gauging-stations)
   - [Digitise to Licence Version Purpose (LVP) Sync](#digitise-to-licence-version-purpose-lvp-sync)
@@ -146,13 +144,6 @@ We have no other details on this job other than what you can determine in `src/m
 There is a CSV file (`gauging-stations/gauging-stations.csv`) held in the `wabs3-maintenance` bucket which contains a list of gauging stations.
 
 Every 6 hours this job checks for changes and either inserts or updates the changes. It is also pointless for exactly the same reasons as [Charge Categories Sync](#charge-categories-sync)!
-
-### Licence not in charge version workflow
-
-- **request** N/A
-- **Schedule** Every 6th hour of the day (00:00, 06:00, 12:00, and 18:00)
-
-We _think_ this job looks for licences that do not have a charge version. For those it finds it creates a `water.charge_version_workflow` record. We as yet have had no need to interact with this table so we don't know what then happens with the information.
 
 ### Refresh event
 
