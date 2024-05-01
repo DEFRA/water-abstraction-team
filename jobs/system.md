@@ -32,6 +32,21 @@ This is a fallback option should the overnight refresh of our DB to a read-only 
 
 These schema `.tgz` files are then uploaded to AWS S3 where they can de downloaded. This was built to support the reporting needs of the service. It is not currently scheduled in `production`.
 
+### Licence updates
+
+- **request** `POST /jobs/licence-updates`
+- **schedule** 08:15 every day
+
+> Replaced a job in the legacy [water-abstraction-service](https://github.com/DEFRA/water-abstraction-service) which we had to replace when we found that BullMQ isn't reliably triggering scheduled jobs.
+
+For context, putting a licence into workflow is a current practice to prevent them being billed until the Billing & Data team have had a chance to confirm all is well.
+
+The job puts licences into 'workflow' that have a `licence_version` that was created in the last 2 months (from date the job is run). If the licence is already in 'workflow' or part of a PRESROC bill run it skips adding it. Hence, the 2 month window. This covers licences that, for example, were in a bill run that has now been 'sent', so can be added to workflow for checking.
+
+Essentially, the current logic is premised that there is a 1-to-1 relationship between `licence_version` and `charge_version_workflows` where `deleted_date` is not null! This is what stops a licence continually being added back into workflow.
+
+See [WATER-4437](https://eaflood.atlassian.net/browse/WATER-4437) for more details if needed.
+
 ### Time limited
 
 - **request** `POST /jobs/time-limited`
