@@ -50,6 +50,8 @@ See [WATER-4437](https://eaflood.atlassian.net/browse/WATER-4437) for more detai
 ### Time limited
 
 - **request** `POST /jobs/time-limited`
-- **schedule** 20:15 every day
+- **schedule** 08:05 every day
 
-Puts SROC licences into 'workflow' that have a related `purpose` that is due to expire in less than 50 days. See [WATER-3486](https://eaflood.atlassian.net/browse/WATER-3486) for more details if needed.
+> We intentionally run this job before [Licence updates](#licence-updates). Should a licence with a time limited purpose get updated, highlighting it is time-limited takes precedence over it also being an updated licence
+
+Puts SROC licences into 'workflow' that have a related `purpose` that is due to expire in less than 50 days. You'll see them listed on the **Charge information workflow** 'To setup' tab with the action link `Time limited`. See [WATER-3486](https://eaflood.atlassian.net/browse/WATER-3486) for more details if needed.
