@@ -101,25 +101,6 @@ materials.forEach((material) => {
 materials.forEach((material) => console.log(`${material} - ${material.length}`))
 ```
 
-#### *️⃣ The exception
-
-The one exception to _block_ body over _concise_ is when you are just performing a [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) check.
-
-```javascript
-const transactions = [
-  { billableDays: 25, volume: 100 },
-  { billableDays: 15, volume: 75, charge: 754 }
-]
-
-// Concise - It's clearer we only care if it's 'truthy'
-transactions.some((transaction) => transaction.charge)
-
-// Body - It looks like we care more about the value of charge
-transactions.some((transaction) => {
-  return transaction.charge
-})
-```
-
 ### Function naming conventions for services
 
 The bulk of our system's business logic resides in "services", each of which typically performs a single task. This task may be an individual step of a process, or it may be marshalling the various steps of this multi-stage process. But either way, services tend to focus on doing one thing in particular.
