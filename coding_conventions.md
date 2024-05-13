@@ -238,6 +238,7 @@ const ChargeModuleTokenService = require('../../app/services/charge-module-token
 
 // Start testing!
 ```
+
 ## JSDoc Comments
 
 In node the standard way to document code is by using comments called [JSDoc]( https://jsdoc.app/) comments. This style of comments has its own conventions that we follow.
@@ -249,6 +250,7 @@ Begin the JSDoc comment with a one-line short description of the code element, p
 Use the [@param](https://jsdoc.app/tags-param.html) and [@returns](https://jsdoc.app/tags-returns.html) tags to provide details on the arguments a method expects and what it returns.
 
 For example:
+
 - `@param {string} name - Name of the licensee` A simple primitive param
 - `@param {number[]} readings - Meter readings for the last week` A param that is an array
 - `@returns {Object} Details about the abstraction purpose` Documenting the return value
@@ -256,6 +258,7 @@ For example:
 We don't end the method short description or the param and return descriptions with a full stop. If an expanded description is added treat it as a normal document and do finish the sentences with full stops.
 
 The following is an example of a 'good' method document comment.
+
 ```javascript
 /**
  * Fetch all SROC charge versions linked to licences flagged for supplementary billing
