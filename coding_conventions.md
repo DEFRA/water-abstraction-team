@@ -253,11 +253,16 @@ it('returns a "true" success status', async () => {
 })
 
 // Bad
+it('returns a \'true\' success status', async () => {
+  expect(succeeded).to.be.true()
+})
+
+// Also bad
 it('returns a `true` success status', async () => {
   expect(succeeded).to.be.true()
 })
 
-// Also Bad
+// Also bad
 it("returns a 'true' success status", async () => {
   expect(succeeded).to.be.true()
 })
