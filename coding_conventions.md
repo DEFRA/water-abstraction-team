@@ -12,6 +12,7 @@ We make best efforts to follow them when working in the legacy repos. There are 
 - [Line length](#line-length)
 - [Top of .js files](#top-of-js-files)
   - [Top of test.js files](#top-of-testjs-files)
+- [Unit test descriptive text](#unit-test-descriptive-text)
 - [JSDoc Comments](#JSDoc-Comments)
   - [Promises](#promises)
 
@@ -237,6 +238,34 @@ const RequestLib = require('../../app/lib/request.lib.js')
 const ChargeModuleTokenService = require('../../app/services/charge-module-token.service.js')
 
 // Start testing!
+```
+
+## Unit test descriptive text
+
+When writing the descriptive text in either the `describe()` or `it()` blocks of a unit test, we follow the convention of wrapping the text in single quotes.
+
+If there is a word(s) within this text string that we want to emphasise then we follow the convention of wrapping the word(s) in double quotes.
+
+```javascript
+// Good
+it('returns a "true" success status', async () => {
+  expect(succeeded).to.be.true()
+})
+
+// Bad
+it('returns a \'true\' success status', async () => {
+  expect(succeeded).to.be.true()
+})
+
+// Also bad
+it('returns a `true` success status', async () => {
+  expect(succeeded).to.be.true()
+})
+
+// Also bad
+it("returns a 'true' success status", async () => {
+  expect(succeeded).to.be.true()
+})
 ```
 
 ## JSDoc Comments
