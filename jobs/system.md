@@ -47,6 +47,13 @@ Essentially, the current logic is premised that there is a 1-to-1 relationship b
 
 See [WATER-4437](https://eaflood.atlassian.net/browse/WATER-4437) for more details if needed.
 
+### Session cleanup
+
+- **request** `POST /jobs/session-cleanup`
+- **schedule** 21:15 every day
+
+Deletes any records from the `public.sessions` table that are over 24hrs old. See [WATER-4281](https://eaflood.atlassian.net/browse/WATER-4281) for more details if needed.
+
 ### Time limited
 
 - **request** `POST /jobs/time-limited`
