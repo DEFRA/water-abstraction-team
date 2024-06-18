@@ -67,6 +67,7 @@ Using the information we have gathered about the background jobs running in the 
 |19:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
 |20:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
 |21:00|[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
+|21:15|[Session cleanup](/jobs/system.md#session-cleanup)|[water-abstraction-system](/jobs/system.md)|
 |22:00|[Charge Categories Sync](/jobs/service.md#charge-categories-sync)|[water-abstraction-service](/jobs/service.md)|
 | -   |[Customer file refresh](/jobs/service.md#customer-file-refresh)|[water-abstraction-service](/jobs/service.md)|
 | -   |[Gauging Stations Sync](/jobs/service.md#gauging-stations-sync)|[water-abstraction-service](/jobs/service.md)|
