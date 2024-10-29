@@ -13,6 +13,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 - [Coding conventions](/coding_conventions.md)
 - [Contributing to this project](/contributing.md)
 - [Jobs](/jobs/README.md)
+- [Objection Model Stubbing Examples](objection_model_stubbing_examples.md)
 - [Principles](principles.md)
 - [Publishing NPM packages](/npm/publishing.md)
 - [Redis notes](/redis_notes.md)
