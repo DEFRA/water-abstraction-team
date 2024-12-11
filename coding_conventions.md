@@ -311,8 +311,8 @@ async function go (regionId, billingPeriod) {
 
 Where a function is [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) the fact a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) is returned should be documented in the `@return`.
 
-Previously, we were not documenting when a function returned a promise. We then discovered this caused unexpected behaviour with SonarCloud and VSCode. Both flagged 'redundant awaits' even though they were necessary.
-We now understand that this was because we were not including documenting when a function returned a promise. SonarCloud and VSCode rely on JSDoc to understand the code's behaviour and without proper documentation, they interpreted anything related to promises (such as the `await` keyword) as incorrect or redundant.
+Previously, we were not documenting when a function returned a promise. We then discovered this caused unexpected behaviour with SonarQube and VSCode. Both flagged 'redundant awaits' even though they were necessary.
+We now understand that this was because we were not including documenting when a function returned a promise. SonarQube and VSCode rely on JSDoc to understand the code's behaviour and without proper documentation, they interpreted anything related to promises (such as the `await` keyword) as incorrect or redundant.
 
 The 'good' example demonstrates how to document the Promise.
 
