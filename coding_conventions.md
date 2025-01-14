@@ -16,6 +16,9 @@ We make best efforts to follow them when working in the legacy repos. There are 
 - [JSDoc Comments](#JSDoc-Comments)
   - [Promises](#promises)
 - [Page Title and Active NavBar Logic](#page-title-and-active-navbar-logic)
+  - [Page Titles](#page-titles)
+  - [Active NavBar](#active-navbar)
+  - [Controller Implementation](#controller-implementation)
 
 ## Add the .js extension
 
@@ -327,7 +330,7 @@ async function go (regionId, billingPeriod) {
 
 When working with pageTitle and activeNavBar, we follow the following conventions to maintain consistency and keep our code clean.
 
-## Page Titles
+### Page Titles
 
 The `pageTitle` should always be set in the presenter.
 
@@ -335,7 +338,7 @@ This ensures that the `pageTitle` is dynamically generated alongside other data 
 
 ---
 
-## Active Nav Bar
+### Active NavBar
 
 The `activeNavBar` should always be set in the service that is called from the controller.
 
@@ -343,7 +346,7 @@ Keeping the `activeNavBar` in the service reduces the logic in controllers.
 
 ---
 
-## Controller Implementation
+### Controller Implementation
 
 Controllers should always return the view using the `pageData` object, which includes both the `pageTitle` and the `activeNavBar`, as well as any other required data.
 
