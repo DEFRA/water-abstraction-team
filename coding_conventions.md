@@ -334,7 +334,7 @@ When working with pageTitle and activeNavBar, we follow the following convention
 
 The `pageTitle` should always be set in the presenter.
 
-This ensures that the `pageTitle` is dynamically generated alongside other data being worked out in the presenter. By centralizing this logic in the presenter, we avoid duplication in the services, and maintain a single source of truth for dynamic page titles.
+This ensures that the `pageTitle` is dynamically generated alongside other data being worked out in the presenter. By centralising this logic in the presenter, we avoid duplication in the services, and maintain a single source of truth for dynamic page titles.
 
 
 ### Active NavBar
