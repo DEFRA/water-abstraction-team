@@ -15,6 +15,7 @@ We make best efforts to follow them when working in the legacy repos. There are 
 - [Unit test descriptive text](#unit-test-descriptive-text)
 - [JSDoc Comments](#JSDoc-Comments)
   - [Promises](#promises)
+- [Page Title and Active NavBar Logic](#page-title-and-active-navbar-logic)
 
 ## Add the .js extension
 
@@ -321,4 +322,57 @@ The 'good' example demonstrates how to document the Promise.
  * @returns {Promise<Object[]>} An array of matching charge versions
  */
 async function go (regionId, billingPeriod) {
+```
+## Page Title and Active NavBar Logic
+
+When working with pageTitle and activeNavBar, we follow the following conventions to maintain consistency and keep our code clean.
+
+## Page Titles
+
+The `pageTitle` should always be set in the presenter.
+
+This ensures that the `pageTitle` is dynamically generated alongside other data being worked out in the presenter. By centralizing this logic in the presenter, we avoid duplication in the services, and maintain a single source of truth for dynamic page titles.
+
+---
+
+## Active Nav Bar
+
+The `activeNavBar` should always be set in the service that is called from the controller.
+
+Keeping the `activeNavBar` in the service reduces the logic in controllers.
+
+---
+
+## Controller Implementation
+
+Controllers should always return the view using the `pageData` object, which includes both the `pageTitle` and the `activeNavBar`, as well as any other required data.
+
+### Good Example
+
+The following example demonstrates the correct usage of `pageTitle` and `activeNavBar`:
+
+```javascript
+async function reported(request, h) {
+  const { licenceId } = request.params
+  const pageData = await ReportedService.go(licenceId)
+
+  return h.view('return-logs/setup/reported.njk', pageData)
+}
+```
+
+### Bad Example
+
+The following example demonstrates the wrong usage of `pageTitle` and `activeNavBar`:
+
+```javascript
+async function reported(request, h) {
+  const { licenceId } = request.params
+  const pageData = await ReportedService.go(licenceId)
+
+  return h.view('return-logs/setup/reported.njk', {
+    pageTitle: 'How was this return reported?',
+    activeNavBar: 'search',
+    ...pageData
+  })
+}
 ```
