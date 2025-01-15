@@ -336,6 +336,24 @@ The `pageTitle` should always be set in the presenter.
 
 This ensures that the `pageTitle` is dynamically generated alongside other data being worked out in the presenter. By centralising this logic in the presenter, we avoid duplication in the services, and maintain a single source of truth for dynamic page titles.
 
+### Good Example
+
+The following example demonstrates the correct way the presenter should return data:
+
+```javascript
+function go(billLicence) {
+  const { id: billLicenceId, bill, licenceId, licenceRef, transactions } = billLicence
+
+  return {
+    accountNumber: bill.accountNumber,
+    billId: bill.id,
+    licenceId,
+    licenceRef,
+    pageTitle: `Transactions for ${licenceRef}`
+    scheme: bill.billRun.scheme,
+  }
+}
+```
 
 ### Active NavBar
 
@@ -343,6 +361,39 @@ The `activeNavBar` should always be set in the service that is called from the c
 
 Keeping the `activeNavBar` in the service reduces the logic in controllers.
 
+### Good Example
+
+The following example demonstrates the correct way the service should return data, when that data is being used to
+render a view. In this case, the activeNavBar is explicitly set within the service, while other data is handled and
+returned through the presenter:
+
+```javascript
+async function go(id) {
+  const billLicence = await FetchBillLicenceService.go(id)
+  const formattedData = ViewBillLicencePresenter.go(billLicence)
+
+  return {
+    activeNavBar: 'bill-runs',
+    ...formattedData
+  }
+}
+```
+Note: We prefer to name the data fetched from the presenter as formattedData to clearly indicate that it has been
+processed and formatted for use in the view.
+
+### Bad Example
+
+```javascript
+async function go(id) {
+  const billLicence = await FetchBillLicenceService.go(id)
+  const pageData = ViewBillLicencePresenter.go(billLicence)
+
+  return {
+    pageTitle: 'View a bill licence',
+    ...pageData
+  }
+}
+```
 
 ### Controller Implementation
 
