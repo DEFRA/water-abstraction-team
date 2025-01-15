@@ -378,7 +378,7 @@ async function go(id) {
   }
 }
 ```
-Note: We prefer to name the data fetched from the presenter as formattedData to clearly indicate that it has been
+Note: We prefer to name the data fetched from the presenter as `formattedData` to clearly indicate that it has been
 processed and formatted for use in the view.
 
 ### Bad Example
