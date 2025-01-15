@@ -364,7 +364,7 @@ Keeping the `activeNavBar` in the service reduces the logic in controllers.
 ### Good Example
 
 The following example demonstrates the correct way the service should return data, when that data is being used to
-render a view. In this case, the activeNavBar is explicitly set within the service, while other data is handled and
+render a view. In this case, the `activeNavBar` is explicitly set within the service, while other data is handled and
 returned through the presenter:
 
 ```javascript
