@@ -328,7 +328,7 @@ async function go (regionId, billingPeriod) {
 ```
 ## Page Title and Active NavBar Logic
 
-When working with pageTitle and activeNavBar, we follow the following conventions to maintain consistency and keep our code clean.
+When working with `pageTitle` and `activeNavBar`, we follow the following conventions to maintain consistency and keep our code clean.
 
 ### Page Titles
 
