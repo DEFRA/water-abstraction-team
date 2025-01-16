@@ -359,9 +359,7 @@ The `activeNavBar` should always be set in the service that is called from the c
 
 Keeping the `activeNavBar` in the service reduces the logic in controllers.
 
-The following example demonstrates the correct way the service should return data, when that data is being used to
-render a view. In this case, the `activeNavBar` is explicitly set within the service, while other data is handled and
-returned through the presenter:
+The following example demonstrates the correct way the service should return data, when that data is being used to render a view. In this case, the `activeNavBar` is explicitly set within the service, while other data is handled and returned through the presenter:
 
 ```javascript
 async function go(id) {
@@ -375,12 +373,9 @@ async function go(id) {
 }
 ```
 
-Note: We prefer to name the data fetched from the presenter as `formattedData` to clearly indicate that it has been
-processed and formatted for use in the view.
+Note: We prefer to name the data fetched from the presenter as `formattedData` to clearly indicate that it has been processed and formatted for use in the view.
 
-The following example demonstrates the wrong way the service could return.  Notice that the presenter is returning
-`pageData` instead of `formattedData`. Additionally, the `pageTitle` is being returned from the service, whereas it
-should be returned by the presenter.
+The following example demonstrates the wrong way the service could return.  Notice that the presenter is returning `pageData` instead of `formattedData`. Additionally, the `pageTitle` is being returned from the service, whereas it should be returned by the presenter.
 
 ```javascript
 async function go(id) {
