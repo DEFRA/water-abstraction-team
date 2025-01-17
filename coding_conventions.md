@@ -13,8 +13,12 @@ We make best efforts to follow them when working in the legacy repos. There are 
 - [Top of .js files](#top-of-js-files)
   - [Top of test.js files](#top-of-testjs-files)
 - [Unit test descriptive text](#unit-test-descriptive-text)
-- [JSDoc Comments](#JSDoc-Comments)
+- [JSDoc Comments](#jsdoc-comments)
   - [Promises](#promises)
+- [Page Title and Active NavBar Logic](#page-title-and-active-navbar-logic)
+  - [Page Titles](#page-titles)
+  - [Active NavBar](#active-navbar)
+  - [Controller Implementation](#controller-implementation)
 
 ## Add the .js extension
 
@@ -47,7 +51,6 @@ Other naming conventions are
 To ensure cross-platform compatibility file names should always be written in lower case. This includes the use of acronyms in the file name. For example `convert-to-csv.service.js`.
 
 Unit test files should be the same as the thing being tested with `.test` added to the end, for example `thing.service.test.js`. The `test/` folder structure should mirror the `app/` folder.
-
 
 ## Modules
 
@@ -321,4 +324,97 @@ The 'good' example demonstrates how to document the Promise.
  * @returns {Promise<Object[]>} An array of matching charge versions
  */
 async function go (regionId, billingPeriod) {
+```
+
+## Page Title and Active NavBar Logic
+
+When working with `pageTitle` and `activeNavBar`, we follow the following conventions to maintain consistency and keep our code clean.
+
+### Page Titles
+
+The `pageTitle` should always be set in the presenter.
+
+This ensures that the `pageTitle` is dynamically generated alongside other data being worked out in the presenter. By centralising this logic in the presenter, we avoid duplication in the services, and maintain a single source of truth for dynamic page titles.
+
+The following example demonstrates the correct way the presenter should return data:
+
+```javascript
+function go(billLicence) {
+  const { id: billLicenceId, bill, licenceId, licenceRef, transactions } = billLicence
+
+  return {
+    accountNumber: bill.accountNumber,
+    billId: bill.id,
+    licenceId,
+    licenceRef,
+    pageTitle: `Transactions for ${licenceRef}`
+    scheme: bill.billRun.scheme,
+  }
+}
+```
+
+### Active NavBar
+
+The `activeNavBar` should always be set in the service that is called from the controller.
+
+Keeping the `activeNavBar` in the service reduces the logic in controllers.
+
+The following example demonstrates the correct way the service should return data, when that data is being used to render a view. In this case, the `activeNavBar` is explicitly set within the service, while other data is handled and returned through the presenter:
+
+```javascript
+async function go(id) {
+  const billLicence = await FetchBillLicenceService.go(id)
+  const formattedData = ViewBillLicencePresenter.go(billLicence)
+
+  return {
+    activeNavBar: 'bill-runs',
+    ...formattedData
+  }
+}
+```
+
+Note: We prefer to name the data fetched from the presenter as `formattedData` to clearly indicate that it has been processed and formatted for use in the view.
+
+The following example demonstrates the wrong way the service could return.  Notice that the presenter is returning `pageData` instead of `formattedData`. Additionally, the `pageTitle` is being returned from the service, whereas it should be returned by the presenter.
+
+```javascript
+async function go(id) {
+  const billLicence = await FetchBillLicenceService.go(id)
+  const pageData = ViewBillLicencePresenter.go(billLicence)
+
+  return {
+    pageTitle: 'View a bill licence',
+    ...pageData
+  }
+}
+```
+
+### Controller Implementation
+
+Controllers should always return the view using the `pageData` object, which includes both the `pageTitle` and the `activeNavBar`, as well as any other required data.
+
+The following example demonstrates the correct way to set out the controllers:
+
+```javascript
+async function reported(request, h) {
+  const { licenceId } = request.params
+  const pageData = await ReportedService.go(licenceId)
+
+  return h.view('return-logs/setup/reported.njk', pageData)
+}
+```
+
+The following example demonstrates the wrong way to set out the controller (returning `pageTitle` and `activeNavBar`):
+
+```javascript
+async function reported(request, h) {
+  const { licenceId } = request.params
+  const pageData = await ReportedService.go(licenceId)
+
+  return h.view('return-logs/setup/reported.njk', {
+    pageTitle: 'How was this return reported?',
+    activeNavBar: 'search',
+    ...pageData
+  })
+}
 ```
