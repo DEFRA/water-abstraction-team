@@ -13,13 +13,29 @@
 
 ```sql
 SELECT
-  l.licence_ref,
-  l.expired_date,
-  l.lapsed_date,
-  l.revoked_date,
-  l.regions->'regionalChargeArea' AS regionalChargeArea
-FROM public.licences l
-WHERE l.water_undertaker = true
-and l.id NOT IN (SELECT rv.licence_id FROM public.return_versions rv)
+  licence_data.*,
+  (CASE
+    WHEN licence_data.needs_migration AND (licence_data.has_existing_rtn_version = FALSE) THEN TRUE
+    ELSE FALSE
+  END) AS has_issue
+FROM (
+  SELECT
+    r.display_name AS region,
+    l.licence_ref,
+    (LEAST(l.expired_date, l.lapsed_date, l.revoked_date)) AS end_date,
+    EXISTS (SELECT 1 FROM public.return_versions rv1 WHERE rv1.licence_id = l.id) AS has_existing_rtn_version,
+    (CASE
+      WHEN LEAST(l.expired_date, l.lapsed_date, l.revoked_date) < '2025-04-01' THEN FALSE
+      ELSE TRUE
+    END) AS needs_migration
+  FROM public.licences l
+  INNER JOIN public.regions r
+    ON r.id = l.region_id
+  WHERE
+    l.water_undertaker = true
+) licence_data
+ORDER BY
+  licence_data.region,
+  licence_data.licence_ref;
 ```
 
