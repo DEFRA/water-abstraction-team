@@ -4,9 +4,9 @@
 - **2025-01-22**
 - [WATER-4880](https://eaflood.atlassian.net/browse/WATER-4880)
 
-> This report generates a list of all water companies (water undertakers) licences that do not have a return version.
+> This report generates a list of all water companies (water undertakers) that we will be migrating for quarterly returns.
 >
-> We want to have the business check each of this licences before we migrate all licences with return versions to
+> We want to have the business check each of these licences before we migrate all licences with return versions to
 > quarterly.
 
 ## Query
