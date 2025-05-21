@@ -4,7 +4,7 @@ There are times we need to restore the `production` database into our `pre-prodc
 
 Our web-ops team have provided a Jenkins job that restores the last `prod` backup using [pg_restore](https://www.postgresql.org/docs/current/app-pgrestore.html).
 
-What we have found is that if the apps are running, and the DB is not cleared beforehand issues can arise. So, we have a process that helps avoid this.
+We have found that issues can arise if the apps are running and the DB is not cleared beforehand. So, we have a process that helps avoid this.
 
 ## Prep
 
