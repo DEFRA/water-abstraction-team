@@ -148,6 +148,19 @@ With the preparation complete, we can proceed with running the Jenkins job `WAL_
 
 Once done refresh your connection to the `pre-prod` database and check you can see the schemas, their tables, and our public views and tables restored.
 
+### Seed users
+
+In our non-production environments we have a range of known 'users' we use to access the system. Having dropped all the schemas and restored `production`, those will have been wiped out.
+
+To re-ssed them, you'll need to connect to the EC2 instance again, though you only need to connect to one of them. Follow the instructions in [Stop all apps](#stop-all-apps) to get connected to `PREWALBESSRV001`. Once on you'll need to navigate to
+`/srv/app/node/water-abstraction-system/current`. Then run the following command
+
+```bash
+DEFAULT_USER_PASSWORD=[our default non-prod password] NODE_ENV=development npm run seed
+```
+
+If successful, it will output `Ran ?? seed files` where ?? is the number of seed files we have at the time of running. You can then terminate the connection.
+
 ## Restart
 
 Repeat the same process you followed in [Stop all apps](#stop-all-apps) only this time run the command `pm2 restart --update-env all`.
