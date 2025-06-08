@@ -41,7 +41,7 @@ The queries used assume charge versions and charge elements have been populated.
 
 ### Charging import (versions)
 
-- **request** `POST /import/1.0/charging`
+- **request** `POST /import/charge-versions`
 - **Schedule** N/A
 
 Creates new PRESROC `water.charge_versions` records or updates existing ones based on `import.NALD_CHG_VERSIONS`
@@ -54,8 +54,8 @@ When you rebuild a local environment you still need to manually trigger this red
 
 ### Charging import (data)
 
-- **request** N/A
-- **scheduled** 01:00 Monday to Friday
+- **request** `POST /import/charging-data`
+- **scheduled** N/A
 
 Updates the following tables
 
@@ -64,18 +64,22 @@ Updates the following tables
 - `water.purposes_secondary` from `import."NALD_PURP_SECS"`
 - `water.purposes_uses` from `import."NALD_PURP_USES"`
 - `water.purposes` from `import."NALD_PURPOSES"` (valid combinations table) and joins to the 3 other purpose tables to get IDs
-- `water.return_versions` from `import."NALD_RET_VERSIONS"` (see note below)
-- `water.return_requirements` from `import."NALD_RET_FORMATS"`
-- `water.return_requirement_purposes` from `import."NALD_RET_FMT_PURPOSES"`
 
-Return versions depends on `water.licences` being populated, and this has a knock on effect to requirements and requirement purposes. This means until the NALD import has completed these 3 tables will fail to populate on a first run.
+This was originally a scheduled job that also included updating return versions and return requirements. We moved these to their own [Return Versions job](#return-versions) as part of the work to migrate management of them to WRLS from NALD. That just left the fixed reference data tables. These never change, so we removed the scheduling. You can still trigger the job manually if required.
 
 ### Licence import
 
 - **request** `POST /import/licences`
-- **schedule** 04:00 Monday to Friday
+- **schedule** 03:15 Monday to Friday
 
 Like the NALD import this is made up of a series of 'jobs'.
+
+#### Clean
+
+Deletes licences and licence related records that no longer exist in NALD. The two exceptions are
+
+- licences linked to 'sent' bill runs
+- return versions linked to completed
 
 #### Delete removed documents
 
@@ -145,3 +149,30 @@ It uses the NALD data to populate and update `permit.licence` and `crm.document_
 - **schedule** 10:00 Monday to Friday
 
 It queries `water_import.job` for any failed 'jobs'. If there are any it generates an email sent via [Notify](https://www.notifications.service.gov.uk/) to the Product Owner and Delivery Manager. There always seems to be a few failed jobs so the PO and DM look for any jobs that aren't normally listed or a spike in the numbers. If they find any they will typically ask the team to investigate further.
+
+### Points
+
+- **request** N/A
+- **schedule** 10:00 Monday to Friday
+
+### Mod logs
+
+- **request** N/A
+- **schedule** 10:00 Monday to Friday
+
+### Return versions
+
+- **request** N/A
+- **schedule** 10:00 Monday to Friday
+
+Updates the following tables
+
+- `water.return_versions` from `import."NALD_RET_VERSIONS"` (see note below)
+- `water.return_requirements` from `import."NALD_RET_FORMATS"`
+- `water.return_requirement_purposes` from `import."NALD_RET_FMT_PURPOSES"`
+
+### Returns
+
+- **request** N/A
+- **schedule** 10:00 Monday to Friday- **request** N/A
+- **schedule** 10:00 Monday to Friday
