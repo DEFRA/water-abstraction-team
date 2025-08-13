@@ -89,7 +89,9 @@ However here, the comment is helpful to explain _why_ we're doing what we're doi
 
 ## `div`s
 
-As a general point, we usually don't need to wrap things in `<div>` tags. Wrap text in `<p>` tags; individual components don't need anything wrapping them. If a `<div>` is being used to apply a class to an individual component then we may be able to add that class directly to the component, eg:
+As a general point, we don't usually need to wrap things in `<div>` tags. Individual components don't need anything wrapping them, and text should be wrapped in `<p>` tags.
+
+If a `<div>` is being used to apply a class to an individual component then we may be able to add that class directly to the component, eg:
 
 ```html
 {# Incorrect: #}
@@ -155,7 +157,6 @@ We insert the page heading like so:
 
 {# or if we want to set specific styling to match existing design: #}
 {{ pageHeading(licenceRef, pageTitle, 'govuk-heading-xl govuk-!-margin-bottom-3') }}
-
 ```
 
 If the page is largely comprised of a single component (eg. a page displaying radio buttons) we set the page heading:
@@ -166,9 +167,9 @@ If the page is largely comprised of a single component (eg. a page displaying ra
 {% endset %}
 ```
 
-We can then use it in a `fieldset`:
+We can then use it in a `fieldset`.
 
-### `fieldset`
+## `fieldset`
 
 When the page is largely comprised of a single component, ensure we have a `fieldset` in it, eg:
 
@@ -186,9 +187,9 @@ When the page is largely comprised of a single component, ensure we have a `fiel
 
 We also clean up any existing `fieldset.legend`.
 
-## `govukButton`
+## Single line vs multiple lines
 
-We consistently write it on one line, eg:
+Where possible, we should contract things onto a single line if that would be within the 120-char line limit. For example:
 
 ```html
 {# Incorrect: #}
@@ -201,33 +202,35 @@ We consistently write it on one line, eg:
 {{ govukButton({ text: "Continue", preventDoubleClick: true }) }}
 ```
 
-The exception is if it goes over the 120 character line width, in which case leave it broken over multiple lines.
+This applies to HTML as well:
 
-> TODO: Confirm what we want to do if we have two buttons next to each other, one on one line and the other on multiple lines:
->
-> ```
-> {{ govukButton({ text: "Continue", preventDoubleClick: true }) }}
->
-> {{ govukButton({
->   text: '...',
->   href: '...',
->   classes: '...'
-> }) }}
-> ```
-> Do we strictly follow the rule, or do we break them both up for visual consistency? ie:
-> ```
-> {{ govukButton({
->   text: "Continue",
->   preventDoubleClick: true
-> }) }}
->
-> {{ govukButton({
->   text: '...',
->   href: '...',
->   classes: '...'
-> }) }}
-> ```
+```html
+{# Incorrect: #}
+<p>
+  Some text.
+</p>
 
+{# Correct: #}
+<p>Some text.</p>
+```
+
+## Component brackets
+
+Components should have the initial `{{` brackets on the same line as the component name. For example:
+
+```html
+{# Incorrect: #}
+{{
+  govukSummaryList({
+    {# ... #}
+  })
+}}
+
+{# Correct: #}
+{{ govukSummaryList({
+  {# ... #}
+}) }}
+```
 
 ## `govuk-summary-list`
 
@@ -310,20 +313,10 @@ We define `backlink` in the presenter and pass to the template:
 
 ```html
 {# Incorrect: #}
-{{
-  govukBackLink({
-    text: 'Back',
-    href: '/system/bill-runs/setup/' + sessionId + '/region'
-  })
-}}
+{{ govukBackLink({ text: 'Back', href: '/system/bill-runs/setup/' + sessionId + '/region' }) }}
 
 {# Correct: #}
-{{
-  govukBackLink({
-    text: 'Back',
-    href: backlink
-  })
-}}
+{{ govukBackLink({ text: 'Back', href: backlink }) }}
 ```
 
 ## Hint text
