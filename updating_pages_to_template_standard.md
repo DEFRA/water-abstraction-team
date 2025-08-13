@@ -186,7 +186,7 @@ When the page is largely comprised of a single component, ensure we have a `fiel
 
 We also clean up any existing `fieldset.legend`.
 
-## `govukButton` ✅ BUT we want to update docs to say "write on one line unless it goes over 120 char line width, and TBC what we do if we multiple buttons in a file, some of which are >120 chars and some of which aren't (including some that differ right next to each other)"
+## `govukButton`
 
 We consistently write it on one line, eg:
 
