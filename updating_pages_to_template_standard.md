@@ -214,6 +214,38 @@ This applies to HTML as well:
 <p>Some text.</p>
 ```
 
+An exception to the rule is when using directives like `{# if #}`, `{# set #}`, `{# block #}` etc. Here we always put the directive on its own line. For example:
+
+```html
+{# Incorrect: #}
+{% set pageHeading %}{{ pageHeading(returnReference, pageTitle) }}{% endset %}
+
+{# Correct: #}
+{% set pageHeading %}
+  {{ pageHeading(returnReference, pageTitle) }}
+{% endset %}
+```
+
+If a component is spread over multiple lines then we don't need to compress individual elements that can fit on one line. For example:
+
+```html
+{# Incorrect: #}
+{{ govukRadios({
+  name: "periodDateUsedOptions",
+  fieldset: { legend: { html: pageHeading } },
+  {# ... #}
+}) }}
+
+{{ govukRadios({
+  name: "periodDateUsedOptions",
+  fieldset: {
+    legend: {
+      html: pageHeading
+    }
+  },
+  {# ... #}
+}) }}
+
 ## Component brackets
 
 Components should have the initial `{{` brackets on the same line as the component name. For example:
