@@ -21,6 +21,7 @@ This acts as a repo of guides and documents specific to the team, plus it's wher
 - [Request for Change (RfC)](/rfc/README.md)
 - [Restore PROD to PRE-PROD](preprod_restore.md)
 - [Queries](/queries/README.md)
+- [Updating pages to "template" standard](updating_pages_to_template_standard.md)
 - [Ways of working](ways_of_working.md)
 - [Welcome](welcome.md)
 
