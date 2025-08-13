@@ -1,5 +1,9 @@
 # Updating pages to "template" standard
 
+We have opinionated standards on how we write our code, but not for how we write views. This means that different views do similar things in very different ways.
+
+We have agreed as a team to bring our pages up to a "template" standard, with the views in the return versions setup journey being the first pages we did this for. Following completion of that work, we have documented the changes so that the work can be replicated for other journeys as and when we get to them.
+
 ### Errors
 
 Where we see things like this:
