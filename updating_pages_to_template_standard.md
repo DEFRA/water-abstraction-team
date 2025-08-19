@@ -42,7 +42,7 @@ We can simply do this:
   errorMessage: startResultErrorMessage,
   items: [
     {
-      classes: "govuk-input--width-2 {{ 'govuk-input--error' if error.text.startResult }}",
+      classes: "govuk-input--width-2" + (' govuk-input--error' if error.text.startResult),
       {# ... #}
     },
     {# ... #}
@@ -50,7 +50,38 @@ We can simply do this:
 }) }}
 ```
 
-In other words, we ditch the first block entirely that sets the error class and message, and instead set them conditionally within whatever uses them.
+In other words, we ditch the first block entirely that sets the error class and message, and instead add them conditionally to whatever uses them.
+
+Note that components will automatically add the error class if an error messge is specified; in this case we don't need to conditionally add it at all. `govukInput` is one such example:
+
+```html
+{# Incorrect: #}
+{{ govukInput({
+  id: "other-user",
+  name: "otherUser",
+  classes: "govuk-!-width-one-third {{ 'govuk-input--error' if error.emailAddressInputFormError }}",
+  errorMessage: error.emailAddressInputFormError,
+  ...
+}) }}
+
+{# Also incorrect: #}
+{{ govukInput({
+  id: "other-user",
+  name: "otherUser",
+  classes: "govuk-!-width-one-third + (' govuk-input--error' if error.emailAddressInputFormError),
+  errorMessage: error.emailAddressInputFormError,
+  ...
+}) }}
+
+{# Correct: #}
+{{ govukInput({
+  id: "other-user",
+  name: "otherUser",
+  classes: "govuk-!-width-one-third",
+  errorMessage: error.emailAddressInputFormError,
+  ...
+}) }}
+```
 
 ## Unnecessary comments
 
