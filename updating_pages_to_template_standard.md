@@ -409,7 +409,7 @@ If we're using `html` somewhere but only to apply an attribute, use `text` inste
 
 ## Pass links to template from presenter instead of hardcoding
 
-In the example above, we see that `href` goes from a hardcoded url `"/system/return-versions/setup/" + sessionId + "/start-date"` to `reasonLink`, which we define in the presenter and pass to the template. This applies to non-dynamic urls as well, so a link like `"/change"` would also be passed in from the presenter.
+In the example above, we see that `href` goes from a hardcoded url `"/system/return-versions/setup/" + sessionId + "/start-date"` to `reasonLink`, which we define in the presenter and pass to the template. This applies to static urls as well, so a link like `"/change"` would also be passed in from the presenter.
 
 Passing in links also applies to:
 
@@ -420,6 +420,16 @@ We define `backlink` in the presenter and pass to the template:
 ```html
 {# Incorrect: #}
 {{ govukBackLink({ text: 'Back', href: '/system/bill-runs/setup/' + sessionId + '/region' }) }}
+
+{# Correct: #}
+{{ govukBackLink({ text: 'Back', href: backlink }) }}
+```
+
+Again, this applies to static links as well:
+
+```html
+{# Incorrect: #}
+{{ govukBackLink({ text: 'Back', href: '/manage }) }}
 
 {# Correct: #}
 {{ govukBackLink({ text: 'Back', href: backlink }) }}
