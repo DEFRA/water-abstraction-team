@@ -169,32 +169,73 @@ We remove the `govuk-body` class wherever we see it. So for example. if we have 
 
 If we have `<div class="govuk-body">` then we would remove the `<div>` entirely in line with the previous principle.
 
-## Page headings
+## Imports section
 
-If every page shares a common heading, we can extract it to a suitable file in `views/macros`. As we update more and more pages, we will likely accumulate common page headings which we can re-use across journeys (for example, there is already `views/macros/licence-reference-page-heading.njk` which shows the page title with the licence ref smaller above it; this is common in our service). When we do import a page heading, ensure we have a separating line between it and the govuk component imports, ie:
+The imports section at the top of the page should be laid out with the `extends` directive first, then a blank line, then any external imports (eg. components), then any internal imports (eg. our own macros). For example:
 
 ```html
 {% extends 'layout.njk' %}
+
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% from "macros/licence-reference-page-heading.njk" import pageHeading %}
+{% from "macros/page-heading.njk" import pageHeading %}
 ```
 
-We insert the page heading like so:
+## Page headings
+
+Our `pageHeading` macro should be used for all pages:
 
 ```html
-{{ pageHeading(licenceRef, pageTitle) }}
+{# Incorrect: #}
+<h1 class="govuk-heading-l">{{ pageTitle }}</h1>
 
-{# or if we want to set specific styling to match existing design: #}
-{{ pageHeading(licenceRef, pageTitle, 'govuk-heading-xl govuk-!-margin-bottom-3') }}
+{# Correct: #}
+{{ pageHeading(pageTitle) }}
+```
+
+A caption can optionally be passed; note that captions are defined entirely within the presenter, ie. any text previously in the template (`Bill run` in the below example) is instead defined in the presenter.
+
+```html
+{# Incorrect: #}
+<span class="govuk-caption-l">Bill run {{ billRunNumber }}</span>
+<h1 class="govuk-heading-l">{{ pageTitle }}</h1>
+
+{# Correct: #}
+{{ pageHeading(pageTitle, caption) }}
+```
+
+```js
+// Incorrect presenter:
+function go() {
+  // ...
+  return {
+    billRunNumber,
+    pageTitle: 'Page title'
+  }
+}
+
+// Correct presenter:
+function go() {
+  // ...
+  return {
+    caption: `Bill run ${billRunNumber}`,
+    pageTitle: 'Page title'
+  }
+}
+```
+
+If we want specific styling to match existing design, this can also be passed in:
+
+```html
+{{ pageHeading(pageTitle, caption, 'govuk-heading-xl govuk-!-margin-bottom-3') }}
 ```
 
 If the page is largely comprised of a single component (eg. a page displaying radio buttons) we set the page heading:
 
 ```html
 {% set pageHeading %}
-  {{ pageHeading(licenceRef, pageTitle) }}
+  {{ pageHeading(pageTitle, caption) }}
 {% endset %}
 ```
 
