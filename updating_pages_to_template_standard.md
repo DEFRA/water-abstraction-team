@@ -4,9 +4,203 @@ We have opinionated standards on how we write our code, but not for how we write
 
 We have agreed as a team to bring our pages up to a "template" standard, with the views in the return versions setup journey being the first pages we did this for. Following completion of that work, we have documented the changes so that the work can be replicated for other journeys as and when we get to them.
 
-## Errors
+## Page content block
 
-Where we see things like this:
+Content should be defined in a `pageContent` block, eg:
+
+```html
+{% block pageContent %}
+  <form method="post">
+    <input type="hidden" name="wrlsCrumb" value="{{ wrlsCrumb }}" />
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {{ govukInput({
+          ...
+        }) }}
+        {{ govukButton({ text: "Continue", preventDoubleClick: true }) }}
+      </div>
+    </div>
+  </form>
+{% endblock %}
+```
+
+When using a `pageContent` block, the page heading will automatically be defined as `pageHeadingHtml` and an error summary block provided.
+
+
+## Page heading
+
+This should be defined in the presenter as `pageTitle` with optional caption `pageTitleCaption`, eg:
+
+```js
+return {
+  pageTitle: 'Select how often readings or volumes are collected',
+  pageTitleCaption: `Licence ${licence.licenceRef}`,
+  // ...
+}
+```
+
+This will be made available as `pageHeadingHtml` for use in the page. For example:
+
+```html
+{% block pageContent %}
+  {{ pageHeadingHtml }}
+
+  {# ... #}
+{% endblock %}
+```
+
+If the page is largely comprised of a single component (eg. a page with just check boxes to select) we can use it in `fieldset`:
+
+```html
+{{ govukCheckboxes({
+  name: "agreementsExceptions",
+  fieldset: {
+    legend: {
+      html: pageHeadingHtml
+    }
+  },
+  {# ... #}
+}) }}
+```
+
+
+## Back links
+
+> Remember to remove any existing `govukBackLink` import from the top of the file when amending an existing page.
+
+These should be defined in the presenter as an object `backLink` with `href` and `text`, eg:
+
+```js
+return {
+  backLink: { href: '/system/previous-page', text: 'Back' },
+  // ...
+}
+```
+
+These will automatically be displayed on the page provided the `breadcrumbs` block isn't being overwritten. In other words, ensure `backLink` is set in the presenter and remove anything like this from the page:
+
+```html
+{% block breadcrumbs %}
+  {{ govukBackLink({ text: 'Back', href: backLink }) }}
+{% endblock %}
+```
+
+
+## Error summary
+
+> Remember to remove any existing `govukErrorSummary` import from the top of the file when amending an existing page.
+
+Provided we are defining the `pageContent` block in our template, an error summary will automatically be displayed at the top of the page when an array `errorList` is present.
+
+If a page can only ever return a single error (eg. it contains a single component such as radio buttons), the validator should return a single object `error` with `href` pointing to where on the page the error is, and `text` defining the error as returned from the validator. The `errorList` array should be created from this in the template, eg:
+
+```js
+async function go(payload) {
+  const validationResult = _validate(payload)
+
+  // ...
+
+  return {
+    errorList: validationResult,
+    ...pageData
+  }
+}
+
+function _validate(payload) {
+  const validation = Validator.go(payload)
+
+  if (!validation.error) {
+    return null
+  }
+
+  const { message } = validation.error.details[0]
+
+  return {
+    href: '#returnsPeriod-error',
+    text: message
+  }
+}
+```
+
+```html
+{% extends 'layout.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% from 'macros/page-heading.njk' import pageHeading %}
+
+{% if error %}
+  {% set errorList = [{
+    text: error.text,
+    href: error.href
+  }] %}
+{% endif %}
+
+{% block pageContent %}
+  <form method="post">
+    <input type="hidden" name="wrlsCrumb" value="{{ wrlsCrumb }}"/>
+
+    {{ govukRadios({
+      name: "radios",
+      errorMessage: error,
+      fieldset: {
+        legend: {
+          html: pageHeadingHtml
+        }
+      },
+      items: radios
+    }) }}
+
+    {{ govukButton({ text: "Continue", preventDoubleClick: true }) }}
+  </form>
+{% endblock %}
+```
+
+If a page can return multiple errors, they the validator should return the `errorList` array, eg:
+
+```js
+async function go(payload) {
+  const validationResult = _validate(payload)
+
+  // ...
+
+  return {
+    errorList: validationResult,
+    ...pageData
+  }
+}
+
+function _validate(payload) {
+  const validation = Validator.go(payload)
+
+  if (!validation.error) {
+    return null
+  }
+
+  const result = {
+    errorList: []
+  }
+
+  validation.error.details.forEach((detail) => {
+    result.errorList.push({
+      href: `#${detail.context.key}`,
+      text: detail.message
+    })
+
+    result[detail.context.key] = detail.message
+  })
+
+  return result
+}
+```
+
+
+## Errors in components
+
+> This needs to be revised in light of the error summary guidance above.
+
+Where we see things like this where an error class and message is being set in a separate block:
 
 ```html
 {% if error.text.startResult %}
@@ -63,7 +257,9 @@ Note that components will automatically add the error class if an error messge i
   errorMessage: error.emailAddressInputFormError,
   ...
 }) }}
+```
 
+```html
 {# Also incorrect: #}
 {{ govukInput({
   id: "other-user",
@@ -72,7 +268,9 @@ Note that components will automatically add the error class if an error messge i
   errorMessage: error.emailAddressInputFormError,
   ...
 }) }}
+```
 
+```html
 {# Correct: #}
 {{ govukInput({
   id: "other-user",
@@ -82,6 +280,7 @@ Note that components will automatically add the error class if an error messge i
   ...
 }) }}
 ```
+
 
 ## Unnecessary comments
 
