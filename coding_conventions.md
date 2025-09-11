@@ -79,6 +79,11 @@ function helloWorld () {
 }
 
 // DON'T do this
+const helloWorld = function() {
+  return 'Hello, world!'
+}
+
+// And DON'T do this
 const helloWorld = () => {
   return 'Hello, world!'
 }
@@ -86,7 +91,7 @@ const helloWorld = () => {
 
 ### Arrow functions
 
-When we do need to use [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), parameters are always wrapped in brackets even if there is only one. Also, use _block body_ over _concise body_ *️⃣.
+When we use [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), parameters are always wrapped in brackets even if there is only one. Also, use _block body_ over _concise body_ *️⃣.
 
 ```javascript
 const materials = [
@@ -96,13 +101,18 @@ const materials = [
   'Beryllium'
 ]
 
-// Use Block body version
-materials.forEach((material) => {
-  console.log(`${material} - ${material.length}`)
+// Use a Block body with brackets around a single parameter
+materials.map((material) => {
+  return `${material} - ${material.length}`
 })
 
-// Do not use Concise body version
-materials.forEach((material) => console.log(`${material} - ${material.length}`))
+// DON'T omit the brackets on a single parameter
+materials.map(material => {
+  return `${material} - ${material.length}`
+})
+
+// DON'T use a Concise body
+materials.map((material) => `${material} - ${material.length}`)
 ```
 
 ### Function naming conventions for services
