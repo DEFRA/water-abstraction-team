@@ -24,8 +24,12 @@ Content should be defined in a `pageContent` block, eg:
 {% endblock %}
 ```
 
-When using a `pageContent` block, the page heading will automatically be defined as `pageHeadingHtml` and an error summary block provided.
+When using a `pageContent` block:
 
+- The [page heading](#page-heading) will automatically be defined as `pageHeadingHtml`;
+- An [error summary](#error-summary) component is provided;
+- A [notification](#notifications) component is provided;
+- A [warning](#warnings) component is provided.
 
 ## Page heading
 
@@ -63,28 +67,6 @@ If the page is largely comprised of a single component (eg. a page with just che
   },
   {# ... #}
 }) }}
-```
-
-
-## Back links
-
-> Remember to remove any `govukBackLink` import from the top of the file when amending an existing page.
-
-These should be defined in the presenter as an object `backLink` with `href` and `text`, eg:
-
-```js
-return {
-  backLink: { href: '/system/previous-page', text: 'Back' },
-  // ...
-}
-```
-
-These will automatically be displayed on the page provided the `breadcrumbs` block isn't being overwritten. In other words, ensure `backLink` is set in the presenter and remove anything like this from the page:
-
-```html
-{% block breadcrumbs %}
-  {{ govukBackLink({ text: 'Back', href: backLink }) }}
-{% endblock %}
 ```
 
 
@@ -165,6 +147,57 @@ to this:
 ```
 
 ie. the error message is now held in `text` not `message`, and the id is changed to camel case.
+
+
+## Notifications
+
+> Remember to remove any `govukNotificationBanner` import from the top of the file when amending an existing page.
+
+Provided we are defining the `pageContent` block in our template, a notification will automatically be displayed at the top of the page when `notification` is present. This may mean moving the defined notification text from the page template into the presenter. For example, we no longer do this:
+
+```html
+{% if underQuery %}
+  {{ govukNotificationBanner({
+    text: 'This return has been marked under query'
+  }) }}
+{%endif%}
+```
+
+We instead have no `govukNotificationBanner` component in the template and instead put something like this in the presenter:
+
+```js
+return {
+  notification: underQuery ? { text: 'This return has been marked under query' } : null,
+  // ...
+}
+```
+
+
+## Warnings
+
+> Remember to remove any `govukWarningText` import from the top of the file when amending an existing page.
+
+Provided we are defining the `pageContent` block in our template, a warning will automatically be displayed at the top of the page when `warning` is present. This may mean moving the defined notificaiton text from the page template into the presenter. For example, we no longer do this:
+
+```html
+{{ govukWarningText({
+  text: "You will not be able to send a water abstraction alert for the licence at this restriction type and threshold.",
+  iconFallbackText: "Warning"
+}) }}
+
+```
+
+We instead have no `govukWarningText` component in the template and instead put something like this in the presenter:
+
+```js
+return {
+  warning: {
+    text: "You will not be able to send a water abstraction alert for the licence at this restriction type and threshold.",
+    iconFallbackText: "Warning"
+  },
+  // ...
+}
+```
 
 
 ## Errors in components
@@ -250,6 +283,28 @@ Note that components will automatically add the error class if an error messge i
   errorMessage: error.emailAddressInputFormError,
   ...
 }) }}
+```
+
+
+## Back links
+
+> Remember to remove any `govukBackLink` import from the top of the file when amending an existing page.
+
+These should be defined in the presenter as an object `backLink` with `href` and `text`, eg:
+
+```js
+return {
+  backLink: { href: '/system/previous-page', text: 'Back' },
+  // ...
+}
+```
+
+These will automatically be displayed on the page provided the `breadcrumbs` block isn't being overwritten. In other words, ensure `backLink` is set in the presenter and remove anything like this from the page:
+
+```html
+{% block breadcrumbs %}
+  {{ govukBackLink({ text: 'Back', href: backLink }) }}
+{% endblock %}
 ```
 
 
