@@ -29,6 +29,8 @@ When using a `pageContent` block, the page heading will automatically be defined
 
 ## Page heading
 
+> Remember to remove any `pageHeading` import from the top of the file when amending an existing page.
+
 This should be defined in the presenter as `pageTitle` with optional caption `pageTitleCaption`, eg:
 
 ```js
@@ -66,7 +68,7 @@ If the page is largely comprised of a single component (eg. a page with just che
 
 ## Back links
 
-> Remember to remove any existing `govukBackLink` import from the top of the file when amending an existing page.
+> Remember to remove any `govukBackLink` import from the top of the file when amending an existing page.
 
 These should be defined in the presenter as an object `backLink` with `href` and `text`, eg:
 
@@ -88,7 +90,7 @@ These will automatically be displayed on the page provided the `breadcrumbs` blo
 
 ## Error summary
 
-> Remember to remove any existing `govukErrorSummary` import from the top of the file when amending an existing page.
+> Remember to remove any `govukErrorSummary` import from the top of the file when amending an existing page.
 
 Provided we are defining the `pageContent` block in our template, an error summary will automatically be displayed at the top of the page when an array `errorList` is present.
 
