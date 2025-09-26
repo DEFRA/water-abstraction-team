@@ -92,110 +92,79 @@ These will automatically be displayed on the page provided the `breadcrumbs` blo
 
 > Remember to remove any `govukErrorSummary` import from the top of the file when amending an existing page.
 
-Provided we are defining the `pageContent` block in our template, an error summary will automatically be displayed at the top of the page when an array `errorList` is present.
-
-If a page can only ever return a single error (eg. it contains a single component such as radio buttons), the validator should return a single object `error` with `href` pointing to where on the page the error is, and `text` defining the error as returned from the validator. The `errorList` array should be created from this in the template, eg:
+Provided we are defining the `pageContent` block in our template, an error summary will automatically be displayed at the top of the page when an array `errorList` is present. The `formatValidationResult` helper will take the returned validation result and format it as appropriate, so in most cases we can simply assign this to `error` and the error summary will be populated accordingly:
 
 ```js
+const { formatValidationResult } = require('../../presenters/base.presenter.js')
+
+// ...
+
 async function go(payload) {
   const validationResult = _validate(payload)
 
   // ...
 
   return {
-    errorList: validationResult,
+    activeNavBar: 'manage',
+    error: validationResult,
     ...pageData
   }
 }
 
 function _validate(payload) {
-  const validation = Validator.go(payload)
+  const validationResult = Validator.go(payload)
 
-  if (!validation.error) {
-    return null
-  }
-
-  const { message } = validation.error.details[0]
-
-  return {
-    href: '#returnsPeriod-error',
-    text: message
-  }
+  return formatValidationResult(validationResult)
 }
 ```
+
+When updating unit tests, you may find some stubbing that needs to be amended from something like this:
+
+```js
+Sinon.stub(SubmitStartReadingService, 'go').resolves({
+  error: { text: 'Enter a start meter reading' },
+  //...
+})
+```
+
+to something like this:
+
+```js
+// `units` is the name of the component in the template
+Sinon.stub(SubmitUnitsService, 'go').resolves({
+  error: {
+	errorList: [{ href: '#units', text: 'Select which units were used' }],
+	units: { text: 'Select which units were used' }
+  },
+  // ...
+})
+```
+
+The component may need to be amended to ensure that it displays the error message, and that clicking the error in the summary box directs the user to the component. For example, change this:
 
 ```html
-{% extends 'layout.njk' %}
-
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
-
-{% from 'macros/page-heading.njk' import pageHeading %}
-
-{% if error %}
-  {% set errorList = [{
-    text: error.text,
-    href: error.href
-  }] %}
-{% endif %}
-
-{% block pageContent %}
-  <form method="post">
-    <input type="hidden" name="wrlsCrumb" value="{{ wrlsCrumb }}"/>
-
-    {{ govukRadios({
-      name: "radios",
-      errorMessage: error,
-      fieldset: {
-        legend: {
-          html: pageHeadingHtml
-        }
-      },
-      items: radios
-    }) }}
-
-    {{ govukButton({ text: "Continue", preventDoubleClick: true }) }}
-  </form>
-{% endblock %}
+{{ govukInput({
+  id: "some-input",
+  errorMessage: {
+	text: error.someInput.message
+  } if error.someInput,
+  ...
+}) }}
 ```
 
-If a page can return multiple errors, they the validator should return the `errorList` array, eg:
+to this:
 
-```js
-async function go(payload) {
-  const validationResult = _validate(payload)
-
-  // ...
-
-  return {
-    errorList: validationResult,
-    ...pageData
-  }
-}
-
-function _validate(payload) {
-  const validation = Validator.go(payload)
-
-  if (!validation.error) {
-    return null
-  }
-
-  const result = {
-    errorList: []
-  }
-
-  validation.error.details.forEach((detail) => {
-    result.errorList.push({
-      href: `#${detail.context.key}`,
-      text: detail.message
-    })
-
-    result[detail.context.key] = detail.message
-  })
-
-  return result
-}
+```html
+{{ govukInput({
+  id: "someInput",
+  errorMessage: {
+	text: error.someInput.text
+  } if error.someInput,
+  ...
+}) }}
 ```
+
+ie. the error message is now held in `text` not `message`, and the id is changed to camel case.
 
 
 ## Errors in components
