@@ -31,6 +31,7 @@ When using a `pageContent` block:
 - A [notification](#notifications) component is provided;
 - A [warning](#warnings) component is provided.
 
+
 ## Page heading
 
 > Remember to remove any `pageHeading` import from the top of the file when amending an existing page.
@@ -202,29 +203,31 @@ return {
 
 ## Errors in components
 
-> This needs to be revised in light of the error summary guidance above.
+> Confirm which of the following work for conditionally adding error formatting, and which we want to use:
+> - `classes: "govuk-!-width-one-third + (' govuk-input--error' if error.exampleError)`
+> - `classes: "govuk-!-width-one-third" + (error.exampleError and " govuk-input--error" or "")`
+> - `classes: "govuk-!-width-one-third" ~ (error.exampleError and " govuk-input--error" or "")`
+>
+> Note that as stated below, many components automatically add the error class if `errorMessage` is specified so this should be tested on something like a date component (where we add the class to each individual item, as the error class doesn't cascade down to these).
 
 Where we see things like this where an error class and message is being set in a separate block:
 
 ```html
-{% if error.text.startResult %}
-  {% set startResultErrorClass = " govuk-input--error" %}
-  {% set startResultErrorMessage = { text: error.text.startResult } %}
+{% if error %}
+  {% set errorClass = 'govuk-input--error' %}
 {% else %}
-  {% set startResultErrorClass = "" %}
-  {% set startResultErrorMessage = null %}
+  {% set errorClass = '' %}
 {% endif %}
 
-{# ... #}
-
 {{ govukDateInput({
-  id: "abstraction-period-start",
-  namePrefix: "abstraction-period-start",
-  errorMessage: { text: error.text.startResult } if error.text.startResult,
+  id: 'date',
+  namePrefix: 'received-date',
+  errorMessage: error.dateInputFormElement,
   items: [
     {
-        classes: "govuk-input--width-2" + startResultErrorClass,
-        {# ... #}
+      classes: 'govuk-input--width-2 ' + errorClass,
+      name: 'day',
+      value: receivedDateDay
     },
     {# ... #}
   ]
@@ -235,13 +238,14 @@ We can simply do this:
 
 ```html
 {{ govukDateInput({
-  id: "abstraction-period-start",
-  namePrefix: "abstraction-period-start",
-  errorMessage: startResultErrorMessage,
+  id: 'date',
+  namePrefix: 'received-date',
+  errorMessage: error.dateInputFormElement,
   items: [
     {
-      classes: "govuk-input--width-2" + (' govuk-input--error' if error.text.startResult),
-      {# ... #}
+      classes: "govuk-input--width-2" ~ (error.dateInputFormElement and " govuk-input--error" or ""),
+      name: 'day',
+      value: receivedDateDay
     },
     {# ... #}
   ]
@@ -250,25 +254,14 @@ We can simply do this:
 
 In other words, we ditch the first block entirely that sets the error class and message, and instead add them conditionally to whatever uses them.
 
-Note that components will automatically add the error class if an error messge is specified; in this case we don't need to conditionally add it at all. `govukInput` is one such example:
+Note that components will often automatically add the error class if `errorMessage` is specified; in this case we don't need to conditionally add it at all. `govukInput` is one such example:
 
 ```html
 {# Incorrect: #}
 {{ govukInput({
-  id: "other-user",
+  id: "otherUser",
   name: "otherUser",
-  classes: "govuk-!-width-one-third {{ 'govuk-input--error' if error.emailAddressInputFormError }}",
-  errorMessage: error.emailAddressInputFormError,
-  ...
-}) }}
-```
-
-```html
-{# Also incorrect: #}
-{{ govukInput({
-  id: "other-user",
-  name: "otherUser",
-  classes: "govuk-!-width-one-third + (' govuk-input--error' if error.emailAddressInputFormError),
+  classes: "govuk-!-width-one-third" ~ (error.emailAddressInputFormError and " govuk-input--error" or ""),
   errorMessage: error.emailAddressInputFormError,
   ...
 }) }}
