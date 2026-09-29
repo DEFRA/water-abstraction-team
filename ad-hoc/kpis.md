@@ -20,7 +20,7 @@ We are working towards having the ability to calculate our cost per transaction 
 
 Update the `from_date` and `to_date` in the `params` CTE to the date range you require. For example, if you wanted to get the KPI figures for October 2025 you would set the `from_date` to '2025-10-01', and the `to_date` to '2025-11-01'.
 
-Then run the SQl as a script and export the results.
+Then run the SQL as a script and export the results.
 
 ```sql
 WITH params AS (
