@@ -8,7 +8,7 @@ We are working towards having the ability to calculate our cost per transaction 
 
 - A transaction is about task completion. A transaction must be measurable. A transaction can be for an internal or external task completion.
 
-- A transaction is a real user outcome, not a system event. 
+- A transaction is a real user outcome, not a system event.
 
 - A transaction is not a page view.
 
@@ -31,8 +31,10 @@ WITH params AS (
 
 kpis AS (
   SELECT
-    'Contacts updated' AS kpi,
-    count(*) AS number_of_transactions
+    'Contact management' AS category,
+    'Update a contact' AS kpi,
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.company_contacts cc
   INNER JOIN public.licence_roles lr ON cc.licence_role_id = lr.id
   CROSS JOIN params p
@@ -44,8 +46,10 @@ kpis AS (
   UNION ALL
 
   SELECT
-    'Contacts created' AS kpi,
-    count(*) AS number_of_transactions
+    'Contact management' AS category,
+    'Create a contact' AS kpi,
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.company_contacts cc
   INNER JOIN public.licence_roles lr ON cc.licence_role_id = lr.id
   CROSS JOIN params p
@@ -56,8 +60,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Account management' AS category,
     'Create an account - External' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.users u
   CROSS JOIN params p
   WHERE u.application = 'water_vml' -- selects only external accounts
@@ -67,8 +73,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Account management' AS category,
     'Create an account - Internal' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.users u
   CROSS JOIN params p
   WHERE (u.reset_guid IS NULL OR u.last_login IS NOT NULL) -- excludes accounts invited but never activated
@@ -79,8 +87,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Account management' AS category,
     'Edit an account - Internal' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.events e
   CROSS JOIN params p
   WHERE e.type = 'update-user-roles'
@@ -91,8 +101,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Account management' AS category,
     'Grant delegated access' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.notifications n
   CROSS JOIN params p
   WHERE n.message_ref IN ('share_new_user', 'share_existing_user')
@@ -103,8 +115,10 @@ kpis AS (
 
   -- A batch unregistration writes one row per licence, so distinct timestamps count the user action
   SELECT
+    'Account management' AS category,
     'Unregister licence - Internal' AS kpi,
-    count(DISTINCT lu.created_at) AS number_of_transactions
+    count(DISTINCT lu.created_at) AS number_of_transactions,
+    '' AS comment
   FROM public.licence_unregistrations lu
   CROSS JOIN params p
   WHERE lu.created_at >= p.from_date
@@ -113,8 +127,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'WAA' AS category,
     'Send water abstraction alerts' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.events e
   CROSS JOIN params p
   WHERE e.subtype = 'waterAbstractionAlerts'
@@ -124,8 +140,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Account management' AS category,
     'Password reset requests - External' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.notifications n
   INNER JOIN public.users u ON n.recipient = u.username
   CROSS JOIN params p
@@ -137,8 +155,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Account management' AS category,
     'Password reset requests - Internal' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.notifications n
   INNER JOIN public.users u ON n.recipient = u.username
   CROSS JOIN params p
@@ -150,8 +170,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Account management' AS category,
     'Licence name change - External' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.events e
   CROSS JOIN params p
   WHERE e.type = 'licence:name'
@@ -161,8 +183,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Licence setup' AS category,
     'Create return version' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.return_versions rv
   CROSS JOIN params p
   WHERE rv.created_at >= p.from_date
@@ -171,8 +195,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Returns' AS category,
     'Submit return - External' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.return_submissions rs
   CROSS JOIN params p
   WHERE rs.user_type = 'external'
@@ -191,8 +217,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Returns' AS category,
     'Submit/Edit return - Internal' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.return_submissions rs
   CROSS JOIN params p
   WHERE rs.user_type = 'internal'
@@ -202,8 +230,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Returns' AS category,
     'Submit bulk return' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.events e
   CROSS JOIN params p
   WHERE e.type = 'returns-upload'
@@ -213,8 +243,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Returns' AS category,
     'Send return notice - adhoc' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.events e
   CROSS JOIN params p
   WHERE e.type = 'notification'
@@ -230,8 +262,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Returns' AS category,
     'Send return notice per cycle' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.events e
   CROSS JOIN params p
   WHERE e.type = 'notification'
@@ -247,8 +281,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Renewals' AS category,
     'Send adhoc renewal reminder' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.notifications n
   CROSS JOIN params p
   WHERE n.message_ref = 'renewal invitation ad-hoc'
@@ -258,8 +294,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Licence setup' AS category,
     'Create charge version' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.charge_versions cv
   CROSS JOIN params p
   WHERE cv.source = 'wrls'
@@ -269,8 +307,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'WAA' AS category,
     'Tag a licence' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.licence_monitoring_stations lms
   CROSS JOIN params p
   WHERE lms.created_at >= p.from_date
@@ -279,8 +319,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'WAA' AS category,
     'Remove a tag' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.licence_monitoring_stations lms
   CROSS JOIN params p
   WHERE lms.deleted_at >= p.from_date
@@ -289,8 +331,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Licence setup' AS category,
     'Set up a new charging agreement' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.licence_agreements la
   CROSS JOIN params p
   WHERE la.source = 'wrls'
@@ -300,8 +344,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Billing' AS category,
     'Create bill run' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.bill_runs br
   CROSS JOIN params p
   WHERE br.created_at >= p.from_date
@@ -310,8 +356,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Billing' AS category,
     'Send bill run' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.bill_runs br
   CROSS JOIN params p
   WHERE br.status = 'sent'
@@ -322,8 +370,10 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Contact management' AS category,
     'Change billing account address' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.billing_account_addresses baa
   CROSS JOIN params p
   WHERE baa.end_date IS NOT NULL
@@ -333,16 +383,42 @@ kpis AS (
   UNION ALL
 
   SELECT
+    'Workflow' AS category,
     'Remove licences from workflow' AS kpi,
-    count(*) AS number_of_transactions
+    count(*) AS number_of_transactions,
+    '' AS comment
   FROM public.workflows w
   CROSS JOIN params p
   WHERE w.status = 'to_setup'
     AND w.deleted_at >= p.from_date
     AND w.deleted_at < p.to_date
+
+  UNION ALL
+
+  SELECT
+    'Account management' AS category,
+    'Link licence to an account - External' AS kpi,
+    NULL AS number_of_transactions,
+    'Not currently measurable' AS comment
+
+  UNION ALL
+
+  SELECT
+    'Billing' AS category,
+    'Recalculate bills' AS kpi,
+    NULL AS number_of_transactions,
+    'Not currently measurable' AS comment
+
+  UNION ALL
+
+  SELECT
+    'Returns' AS category,
+    'Mark return as received' AS kpi,
+    NULL AS number_of_transactions,
+    'Not currently measurable' AS comment
 )
 
-SELECT kpi, number_of_transactions
+SELECT category, kpi, number_of_transactions, comment
 FROM kpis
-ORDER BY kpi;
+ORDER BY category, kpi;
 ```
